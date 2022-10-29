@@ -3,7 +3,7 @@ const { Pool } = pg;
 
 let config = {
     user: 'postgres',
-    password: 'admin',
+    password: 'adminsam',
     host: 'localhost',
     port: '5432',
     database: 'PROYECTO_TAXIS'

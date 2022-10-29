@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const session = require('express-session');
-const routes = require('./routes/routes');
+const routes = require('./api/routes/routes');
 
 
 //middleware
