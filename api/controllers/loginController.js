@@ -1,25 +1,26 @@
-var pool = require('../../database/conexion.js');
+// var pool = require('../../database/conexion.js')
+const Usuario = require('../../database/models/usuarios')
 
 exports.login = (req, res) => {
     res.render('login');
 }
 
 exports.auth = async(req,res)=>{
-    
-    const user = await pool.query('SELECT * FROM public.usuarios WHERE nombre_usuario = $1',[req.body.usuario]);
+    const { usuario, password } = req.body;
+    console.log(req.body)
+    // const user = await pool.query('SELECT * FROM public.usuarios WHERE nombre_usuario = $1',[req.body.usuario]);
+    const user = await Usuario.findOne({
+        where: {
+            nombre_usuario: usuario, password: password
+        }
+    });
+    console.log(user);
+
     req.session.user=req.body.usuario;
-    if(user.rowCount > 0){
-        if(user.rows[0].password == req.body.password){
-            usuario=req.session.user;
-            res.redirect('/dashboard');
-        }
-        else
-        {
-            res.render('login',{message:'Contraseña no valido'});
-        }
-    }
-    else
-    {
+    if(user){
+        let usuario=req.session.user;
+        res.redirect('/dashboard');
+    }else{
         res.render('login',{message:'Usuario no valido'});
     }
 }
