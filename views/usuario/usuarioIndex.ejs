@@ -1,0 +1,29 @@
+<%-include('../base/header')-%>
+
+    <!-- <form action="/" method="post"> -->
+        <!-- <label>Nombre</label>
+        <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" > -->
+        <h2>Bienvenido a la administración del Usuario</h2>
+    <table class="content-table"> 
+        <thead> 
+            <tr> 
+                <th>Id</th> 
+                <th>Nombre</th> 
+                <th>Apellido</th> 
+                <th>Estado</th> 
+            </tr> 
+        </thead> 
+        <tbody> 
+            <% usuarios.forEach( usuario => { %>
+                <tr> 
+                    <td><%= usuario.id_usuario %></td> 
+                    <td><%= usuario.nombre_usuario %></td> 
+                    <td><%= usuario.apellido_usuario %></td> 
+                    <td><%= usuario.estado_usuario %></td> 
+                </tr> 
+            <% }) %>
+        </tbody> 
+    </table>
+    <!-- </form> -->
+
+<%-include('../base/footer')-%>
