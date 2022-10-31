@@ -1,0 +1,27 @@
+<%-include('../base/header')-%>
+
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nuevo Usuario</div>
+        <div class="card-body">
+            <form action="/usuarios" method="POST">
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="userName" name="userName" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Apellido de Usuario</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="text" class="form-control" id="password" name="password" tabindex="1">
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/usuarios" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>
