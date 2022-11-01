@@ -55,12 +55,24 @@ class UsuarioController {
     }
 
     static async update (req, res) {
-        const usuario = await Usuario.update(req.body, {
-            where: {
-                id_usuario: req.params.id
-            }
-        });
-        res.redirect('/usuarios');
+        const { userName, lastName, password } = req.body;
+        if(!userName || !lastName || !password) {
+            // res.render('usuario/usuarioCreate', {
+            //     error: 'Campos incompletos'
+            // });
+            console.log('Campos incompletos');
+        }else {
+            const usuario = await Usuario.update({
+                nombre_usuario: userName,
+                apellido_usuario: lastName,
+                password: password
+            }, {
+                where: {
+                    id_usuario: req.params.id
+                }
+            });
+            res.redirect('/usuarios');
+        }
     }
 
     static async delete (req, res) {
