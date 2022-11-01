@@ -1,0 +1,32 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración del Usuario</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Nombre</th> 
+            <th scope="col">Apellido</th> 
+            <th scope="col">Estado</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% usuarios.forEach( usuario => { %>
+            <tr> 
+                <td><%= usuario.id_usuario %></td> 
+                <td><%= usuario.nombre_usuario %></td> 
+                <td><%= usuario.apellido_usuario %></td> 
+                <td><%= usuario.estado_usuario %></td> 
+                <td>
+                    <a href="usuarios/edit/<%= usuario.id_usuario %>" class="btn btn-outline-info">Editar</a>
+                    <a href="usuarios/eliminar/<%= usuario.id_usuario %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="usuarios/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Usuario</a>
+</table>
+
+
+<%-include('../base/footer')-%>
