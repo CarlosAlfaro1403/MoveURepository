@@ -15,8 +15,8 @@
                 <td><%= viaje.id_viaje %></td> 
                 <td><%= viaje.destino_viaje %></td> 
                 <td>
-                    <a href="viajes/edit/<%= usuario.id_usuario %>" class="btn btn-outline-info">Editar</a>
-                    <a href="viajes/eliminar/<%= usuario.id_usuario %>" class="btn btn-outline-danger">Eliminar</a>
+                    <a href="viajes/ver/<%= viaje.id_viaje %>" class="btn btn-outline-info">Ver</a>
+                    <a href="viajes/eliminar/<%= viaje.id_viaje %>" class="btn btn-outline-danger">Eliminar</a>
                 </td>
             </tr> 
         <% }) %>

@@ -7,8 +7,8 @@ router.get('/crear', ViajeController.create);
 //router.get('/edit/:id', ViajeController.edit);
 // metodos
 router.get('/', ViajeController.showAll);
-//router.post('/', ViajeController.store);
-//router.post('/editar/:id', ViajeController.update);
+router.post('/', ViajeController.store);
+router.get('/ver/:id', ViajeController.show);
 //router.get('/eliminar/:id', ViajeController.delete);
 
 module.exports = router

@@ -1,0 +1,37 @@
+<%-include('../base/header')-%>
+
+<% if (viaje) { %>
+    <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header">Ver Viaje</div>
+            <div class="card-body">
+                <h3>ID de Viaje: <%= viaje.id_viaje  %></h3>
+                <h3 id="destino"><%= viaje.destino_viaje  %></h3>
+                <h3>Monitorizacion</h3>
+                <div id="map" style="width: 600px; height: 400px;"></div>
+            </div>
+            <script>
+
+                var direccionArr = $( "#destino" ).text().split(',');
+
+                const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 14);
+            
+                const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+            
+                const marker = L.marker([51.5, -0.09]).addTo(map);
+
+                $( document ).ready(function() {
+                    console.log($( "#destino" ).text());
+                    marker.setLatLng([direccionArr[0], direccionArr[1]]).update(); 
+                    console.log( "ready!" );
+                });            
+            
+            </script>
+        </div>
+    </div>
+<% } %>
+
+<%-include('../base/footer')-%>

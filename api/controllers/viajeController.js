@@ -24,33 +24,32 @@ class ViajeController {
             viajes : Viajes
         });
     }
-    /*
+    
     static async show (req, res) {
-        const usuario = await Viaje.findByPk(req.params.id);
+        const viaje = await Viaje.findByPk(req.params.id);
         res.render('viaje/ViajeShow', {
-            usuario
+            viaje: viaje
         });
     }
-
+    
     static async store (req, res) {
-        const { userName, lastName, password } = req.body;
-        if(!userName || !lastName || !password) {
+        const { direccion, taxista } = req.body;
+        if(!direccion || !taxista ) {
             // res.render('usuario/usuarioCreate', {
             //     error: 'Campos incompletos'
             // });
             console.log('Campos incompletos');
         }else {
             console.log(req.body);
-            const usuario = await Usuario.create({
-                nombre_usuario: userName,
-                apellido_usuario: lastName,
-                password: password
+            const viaje = await Viaje.create({
+                destino_viaje: direccion,
+                id_taxista: taxista
             })
-            res.redirect('/usuarios');
+            res.redirect('/viajes');
         }
     }
-
-    /*static async update (req, res) {
+    /*
+    static async update (req, res) {
         const { userName, lastName, password } = req.body;
         if(!userName || !lastName || !password) {
             // res.render('usuario/usuarioCreate', {
@@ -69,8 +68,8 @@ class ViajeController {
             });
             res.redirect('/usuarios');
         }
-    }
-
+    }*/
+    /*
     static async delete (req, res) {
         console.log(req.params);
 
