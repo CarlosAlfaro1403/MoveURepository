@@ -1,0 +1,28 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración del Usuario</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Destino viaje</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% viajes.forEach( viaje => { %>
+            <tr> 
+                <td><%= viaje.id_viaje %></td> 
+                <td><%= viaje.destino_viaje %></td> 
+                <td>
+                    <a href="viajes/edit/<%= usuario.id_usuario %>" class="btn btn-outline-info">Editar</a>
+                    <a href="viajes/eliminar/<%= usuario.id_usuario %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="viajes/crear" class="btn btn-outline-primary mt-4" >Asignar nuevo Viaje</a>
+</table>
+
+
+<%-include('../base/footer')-%>
