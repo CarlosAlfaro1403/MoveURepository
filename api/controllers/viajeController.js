@@ -1,4 +1,5 @@
 const {Viaje} = require('../../database/models/index')
+const {Taxista} = require('../../database/models/index')
 
 class ViajeController {
 
@@ -27,8 +28,10 @@ class ViajeController {
     
     static async show (req, res) {
         const viaje = await Viaje.findByPk(req.params.id);
+        const taxista = await Taxista.findByPk(viaje.id_taxista);
         res.render('viaje/ViajeShow', {
-            viaje: viaje
+            viaje: viaje,
+            taxista: taxista
         });
     }
     

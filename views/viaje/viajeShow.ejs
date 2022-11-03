@@ -1,7 +1,7 @@
 <%-include('../base/header')-%>
 
 <% if (viaje) { %>
-    <div class="container mt-4">
+    <div data-aos="zoom-in" class="container mt-4">
         <div class="card border-secondary">
             <div class="card-header">Ver Viaje</div>
             <div class="card-body">
@@ -31,12 +31,24 @@
                                 <td id="destino_2"></td>
                               </tr>
                               <tr>
-                                <th scope="row">Municipio</th>
+                                <th scope="row">Ciudad</th>
                                 <td id="destino_3"></td>
                               </tr>
                               <tr>
-                                <th scope="row">Ciudad</th>
+                                <th scope="row">Municipio</th>
                                 <td id="destino_4"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Departamento</th>
+                                <td id="destino_5"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Nombre Taxista</th>
+                                <td><%= taxista.nombre_taxista  %> <%= taxista.apellido_taxista  %></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">DUI Taxista</th>
+                                <td><%= taxista.dui_taxista  %></td>
                               </tr>
                             </tbody>
                           </table>
@@ -73,8 +85,9 @@
                     $.get(str_direccion, function(data){
                         $( "#destino_1" ).text(data.address.neighbourhood);
                         $( "#destino_2" ).text(data.address.city_district);
-                        $( "#destino_3" ).text(data.address.municipality);
-                        $( "#destino_4" ).text(data.address.city);
+                        $( "#destino_3" ).text(data.address.city);
+                        $( "#destino_4" ).text(data.address.county);
+                        $( "#destino_5" ).text(data.address.state);
                     });
                 
                 
