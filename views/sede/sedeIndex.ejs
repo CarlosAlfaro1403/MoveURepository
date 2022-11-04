@@ -1,0 +1,33 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración de Sedes</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Nombre</th> 
+            <th scope="col">Direccion</th> 
+            <th scope="col">Cooperativa</th> 
+            <th scope="col">Acciones</th>   
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% sedes.forEach( sede => { %>
+            <tr> 
+                <td><%= sede.id_sede %></td> 
+                <td><%= sede.nombre_sede %></td>
+                <td><%= sede.direccion_sede %></td> 
+                <td><%= sede.id_cooperativa %></td> 
+                <td>
+                    <a href="sedes/edit/<%= sede.id_sede %>" class="btn btn-outline-info">Editar</a>
+                    <a href="sedes/eliminar/<%= sede.id_sede %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+   
+    <a href="sedes/crear" class="btn btn-outline-primary mt-4" >Crear nueva Sede</a>
+</table>
+
+
+<%-include('../base/footer')-%>
