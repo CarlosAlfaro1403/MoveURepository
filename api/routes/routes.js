@@ -9,6 +9,8 @@ router.get('/',loginController.login);
 router.post('/auth',loginController.auth);
 router.get('/logout',loginController.logout);
 router.get('/dashboard',indexController.dashboard);
+router.get('/dashboardT',indexController.dashboardT);
+router.get('/dashboardO',indexController.dashboardO);
 
 router.use('/usuarios', usuarioRouter);
 router.use('/viajes', viajeRouter);
