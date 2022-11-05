@@ -1,0 +1,32 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración de Accidentes</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">ID</th> 
+            <th scope="col">ID Vehiculo</th> 
+            <th scope="col">Costo</th> 
+            <th scope="col">Descripcion</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% accidentes.forEach( accidente => { %>
+            <tr> 
+                <td><%= accidente.id_accidente %></td> 
+                <td><%= accidente.id_vehiculo %></td> 
+                <td><%= accidente.costo_accidente %></td> 
+                <td><%= accidente.descripcion_accidente %></td> 
+                <td>
+                    <a href="accidentes/edit/<%= accidente.id_accidente %>" class="btn btn-outline-info">Editar</a>
+                    <a href="accidentes/eliminar/<%= accidente.id_accidente %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="accidentes/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Accidente</a>
+</table>
+
+
+<%-include('../base/footer')-%>
