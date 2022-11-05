@@ -63,6 +63,18 @@ Viaje.init({
     type: DataTypes.STRING(256),
     allowNull: true
   },
+  cliente_ubicacion: {
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
+  destino_coordenadas: {
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
+  cliente_coordenadas: {
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
 }, {
   sequelize: connection.connect(),
   tableName: 'viaje',

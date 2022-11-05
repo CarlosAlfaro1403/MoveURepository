@@ -19,7 +19,7 @@ class ViajeController {
     // metodos de la clase
     static async showAll (req, res) {
         const Viajes = await Viaje.findAll({
-            attributes: ['id_viaje', 'destino_viaje', 'estado_viaje']
+            attributes: ['id_viaje', 'estado_viaje', 'cliente_ubicacion']
         });
         res.render('viaje/viajeIndex', {
             viajes : Viajes
@@ -45,17 +45,17 @@ class ViajeController {
     }
 
     static async showAllNotificacion (req, res) {
-        const viaje = await Viaje.findByPk(req.params.id);
-        const taxista = await Taxista.findByPk(viaje.id_taxista);
-        res.render('viaje/ViajeNotificacion', {
-            viaje: viaje,
-            taxista: taxista
+        const Viajes = await Viaje.findAll({
+            attributes: ['id_viaje', 'estado_viaje', 'cliente_ubicacion']
+        });
+        res.render('viaje/viajeNotificacionIndex', {
+            viajes : Viajes
         });
     }
     
     static async store (req, res) {
-        const { direccion, taxista } = req.body;
-        if(!direccion || !taxista ) {
+        const { direccion, taxista, cliente_ubicacion} = req.body;
+        if(!direccion || !taxista || !cliente_ubicacion) {
             // res.render('usuario/usuarioCreate', {
             //     error: 'Campos incompletos'
             // });
@@ -63,7 +63,8 @@ class ViajeController {
         }else {
             console.log(req.body);
             const viaje = await Viaje.create({
-                destino_viaje: direccion,
+                cliente_coordenadas: direccion,
+                cliente_ubicacion: cliente_ubicacion,
                 id_taxista: taxista,
                 estado_viaje: 'Pendiente'
             })

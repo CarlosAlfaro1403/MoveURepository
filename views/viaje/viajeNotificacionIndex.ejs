@@ -1,6 +1,6 @@
 <%-include('../base/header')-%>
 <div data-aos="zoom-in" class="container mt-4">
-<h2>Panel de Viajes</h2>
+<h2>Viaje asignado</h2>
 <table class="table table-bordered table-striped text-center mt-4"> 
     <thead> 
         <tr class ="bg-primary text-white"> 
@@ -18,12 +18,11 @@
                 <td><%= viaje.estado_viaje %></td>
                 
                 <td>
-                    <a href="viajes/ver/<%= viaje.id_viaje %>" class="btn btn-outline-info">Ver</a>
+                    <a href="notificacion/<%= viaje.id_viaje %>" class="btn btn-outline-info">Ver</a>
                 </td>
             </tr> 
         <% }) %>
     </tbody> 
-    <a href="/viajes/crear" class="btn btn-outline-primary mt-4" >Asignar nuevo Viaje</a>
 </table>
 </div>
 

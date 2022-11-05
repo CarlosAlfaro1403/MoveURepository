@@ -14,6 +14,7 @@
                     <label for="taxista" class="form-label">Taxista</label>
                     <input type="text" class="form-control" id="taxista" name="taxista" tabindex="1">
                 </div>
+                <input type="hidden" id="cliente_ubicacion" name="cliente_ubicacion" value="">
                 <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
                 <a href="/viajes" class="btn btn-secondary">Cancelar</a>
             </form>
@@ -109,9 +110,17 @@
     //var marker1 = L.marker(e.latlng).addTo(map)
     document.getElementById("direccion").setAttribute('value',str_lat);
     console.log(str_lat)
+    str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+e.latlng.lat+"&lon="+e.latlng.lng;
+    console.log(str_direccion)
+    $.get(str_direccion, function(data){
+        console.log(data.address.neighbourhood);
+        $('input[name="cliente_ubicacion"]').val(data.address.neighbourhood);          
+    });
     }
 
     map.on('click', onMapClick);
+
+    
     
 
 </script>
