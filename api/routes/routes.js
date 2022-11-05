@@ -7,6 +7,7 @@ const viajeRouter = require('./viaje')
 const sedeRouter = require('./sede')
 const taxistaRouter = require('./taxistas')
 const tipoUsuarioRouter = require('./tipoUsuario')
+const accidenteRouter = require('./accidente')
 
 router.get('/',loginController.login);
 router.post('/auth',loginController.auth);
@@ -20,4 +21,5 @@ router.use('/viajes', viajeRouter);
 router.use('/sedes', sedeRouter);
 router.use('/taxistas', taxistaRouter);
 router.use('/tipoUsuarios', tipoUsuarioRouter);
+router.use('/accidentes', accidenteRouter);
 module.exports = router;
