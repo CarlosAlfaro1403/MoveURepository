@@ -5,8 +5,10 @@
     <thead> 
         <tr class ="bg-primary text-white"> 
             <th scope="col">Id</th> 
-            <th scope="col">Nombre</th> 
-            <th scope="col">Apellido</th> 
+            <th scope="col">Nombres</th> 
+            <th scope="col">Apellidos</th>
+            <th scope="col">Usuario</th> 
+            <th scope="col">Sede</th> 
             <th scope="col">Estado</th> 
             <th scope="col">Acciones</th> 
         </tr> 
@@ -15,8 +17,15 @@
         <% usuarios.forEach( usuario => { %>
             <tr> 
                 <td><%= usuario.id_usuario %></td> 
+                <td><%= usuario.nombres %></td> 
+                <td><%= usuario.apellidos %></td> 
                 <td><%= usuario.nombre_usuario %></td> 
-                <td><%= usuario.apellido_usuario %></td> 
+                <td><% sedes.forEach( sede => { %>
+                        <% if(sede.id_sede === usuario.id_sede) { %>
+                            <%= sede.nombre_sede %>
+                        <% } %>
+                    <% }) %>
+                </td> 
                 <td><%= usuario.estado_usuario %></td> 
                 <td>
                     <a href="usuarios/edit/<%= usuario.id_usuario %>" class="btn btn-outline-info">Editar</a>

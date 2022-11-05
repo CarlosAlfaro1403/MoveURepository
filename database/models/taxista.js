@@ -23,6 +23,14 @@ Taxista.init({
     allowNull: false,
     primaryKey: true
   },
+  id_sede: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'sede_cooperativa',
+      key: 'id_sede'
+    }
+  },
   nombre_taxista: {
     type: DataTypes.CHAR(256),
     allowNull: false

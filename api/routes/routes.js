@@ -5,6 +5,8 @@ const indexController = require('../controllers/indexController');
 const usuarioRouter = require('./usuario')
 const viajeRouter = require('./viaje')
 const sedeRouter = require('./sede')
+const taxistaRouter = require('./taxistas')
+const tipoUsuarioRouter = require('./tipoUsuario')
 
 router.get('/',loginController.login);
 router.post('/auth',loginController.auth);
@@ -16,4 +18,6 @@ router.get('/dashboardO',indexController.dashboardO);
 router.use('/usuarios', usuarioRouter);
 router.use('/viajes', viajeRouter);
 router.use('/sedes', sedeRouter);
+router.use('/taxistas', taxistaRouter);
+router.use('/tipoUsuarios', tipoUsuarioRouter);
 module.exports = router;

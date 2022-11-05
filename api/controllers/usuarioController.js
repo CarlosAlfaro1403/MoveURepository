@@ -1,4 +1,5 @@
-const {Usuario} = require('../../database/models/index')
+const {Usuario, TipoUsuario} = require('../../database/models/index')
+const {SedeCooperativa} = require('../../database/models/index')
 
 // exports.user = (req, res) => {
 //     res.render('usuarioCreate');
@@ -7,25 +8,45 @@ const {Usuario} = require('../../database/models/index')
 class UsuarioController {
 
     // redireccionar a la vista de crear usuario
-    static create (req, res) {
-        res.render('usuario/usuarioCreate');
+    static async create (req, res) {
+        const Sedes = await SedeCooperativa.findAll({
+            attributes:['id_sede', 'nombre_sede']
+        });
+        const TipoUsuarios = await TipoUsuario.findAll({
+            attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
+        })
+        res.render('usuario/usuarioCreate',{
+            sedes: Sedes,
+            tipoUsuarios: TipoUsuarios
+        });
     }
 
     static async edit (req, res) {
         const usuario = await Usuario.findByPk(req.params.id);
-        console.log(usuario);
+        const Sedes = await SedeCooperativa.findAll({
+            attributes:['id_sede', 'nombre_sede']
+        });
+        const TipoUsuarios = await TipoUsuario.findAll({
+            attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
+        })
         res.render('usuario/usuarioEdit', {
-            usuario : usuario.dataValues
+            usuario : usuario.dataValues,
+            sedes: Sedes,
+            tipoUsuarios: TipoUsuarios
         });
     }
 
     // metodos de la clase
     static async showAll (req, res) {
         const Usuarios = await Usuario.findAll({
-            attributes: ['id_usuario', 'nombre_usuario', 'apellido_usuario', 'estado_usuario']
+            attributes: ['id_usuario', 'nombre_usuario', 'apellidos', 'estado_usuario','nombres','id_sede']
+        });
+        const Sedes = await SedeCooperativa.findAll({
+            attributes:['id_sede', 'nombre_sede']
         });
         res.render('usuario/usuarioIndex', {
-            usuarios : Usuarios
+            usuarios : Usuarios,
+            sedes: Sedes
         });
     }
 
@@ -37,7 +58,7 @@ class UsuarioController {
     }
 
     static async store (req, res) {
-        const { userName, lastName, password } = req.body;
+        const { userName,names, lastName,id_sede,id_tipo_usuario, password,estado } = req.body;
         if(!userName || !lastName || !password) {
             // res.render('usuario/usuarioCreate', {
             //     error: 'Campos incompletos'
@@ -47,15 +68,19 @@ class UsuarioController {
             console.log(req.body);
             const usuario = await Usuario.create({
                 nombre_usuario: userName,
-                apellido_usuario: lastName,
-                password: password
+                nombres: names,
+                apellidos: lastName,
+                id_sede: id_sede,
+                id_tipo_usuario: id_tipo_usuario,
+                password: password,
+                estado_usuario: estado
             })
             res.redirect('/usuarios');
         }
     }
 
     static async update (req, res) {
-        const { userName, lastName, password } = req.body;
+        const { userName,names, lastName,id_sede,id_tipo_usuario, password,estado } = req.body;
         if(!userName || !lastName || !password) {
             // res.render('usuario/usuarioCreate', {
             //     error: 'Campos incompletos'
@@ -64,8 +89,12 @@ class UsuarioController {
         }else {
             const usuario = await Usuario.update({
                 nombre_usuario: userName,
-                apellido_usuario: lastName,
-                password: password
+                id_sede: id_sede,
+                nombres: names,
+                apellidos: lastName, 
+                id_tipo_usuario: id_tipo_usuario,
+                password: password,
+                estado_usuario: estado
             }, {
                 where: {
                     id_usuario: req.params.id

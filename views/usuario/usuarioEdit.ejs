@@ -5,18 +5,58 @@
         <div class="card border-secondary">
             <div class="card-header">Editar Usuario</div>
             <div class="card-body">
-                <form action="/usuarios/editar/<%= usuario.id_usuario %>" method="POST">
+                <form action="/usuarios/editar/<%= usuario.id_usuario %>" method="POST">                    
+                    <div class="mb-3">
+                        <label for="names" class="form-label">Nombres</label>
+                        <input type="text" value="<%= usuario.nombres  %>" class="form-control" id="names" name="names" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Apellidos</label>
+                        <input type="text" value="<%= usuario.apellidos  %>" class="form-control" id="lastName" name="lastName" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Sede</label>
+                        <select class="form-control" name="id_sede" id="id_sede" tabindex="1">
+                            <% sedes.forEach( sede => { %>
+                                <% if(sede.id_sede === usuario.id_sede) { %>
+                                    <option selected="true" value="<%= sede.id_sede %>"><%= sede.nombre_sede %></option>
+                                <% } else { %>
+                                    <option value="<%= sede.id_sede %>"><%= sede.nombre_sede %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Tipo de Usuario</label>
+                        <select class="form-control" name="id_tipo_usuario" id="id_tipo_usuario" tabindex="1">
+                            <% tipoUsuarios.forEach( tipoUsuario => { %>
+                                <% if(tipoUsuario.id_tipo_usuario === usuario.id_tipo_usuario) { %>
+                                    <option selected="true" value="<%= tipoUsuario.id_tipo_usuario %>"><%= tipoUsuario.nombre_tipo_usuario %></option>
+                                <% } else { %>
+                                    <option value="<%= tipoUsuario.id_tipo_usuario %>"><%= tipoUsuario.nombre_tipo_usuario %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
                     <div class="mb-3">
                         <label for="userName" class="form-label">Nombre de Usuario</label>
                         <input type="text" value="<%= usuario.nombre_usuario  %>" class="form-control" id="userName" name="userName" tabindex="1">
                     </div>
                     <div class="mb-3">
-                        <label for="lastName" class="form-label">Apellido de Usuario</label>
-                        <input type="text" value="<%= usuario.apellido_usuario  %>" class="form-control" id="lastName" name="lastName" tabindex="1">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" value="<%= usuario.password  %>" class="form-control" id="password" name="password" tabindex="1">
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="text" value="<%= usuario.password  %>" class="form-control" id="password" name="password" tabindex="1">
+                        <label for="lastName" class="form-label">Estado</label>
+                        <select class="form-control" name="estado" id="estado" tabindex="1">
+                            <% if(usuario.estado_usuario==="Activo"){ %>
+                                <option selected="true" value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            <% } else if(usuario.estado_usuario==="Inactivo"){ %>
+                                <option selected="true" value="Inactivo">Inactivo</option>
+                                <option value="Activo">Activo</option>
+                            <% } %>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
                     <a href="/usuarios" class="btn btn-secondary">Cancelar</a>
