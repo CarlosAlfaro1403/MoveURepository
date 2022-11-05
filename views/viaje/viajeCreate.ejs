@@ -23,6 +23,7 @@
 
 <script>
 
+
 	const map = L.map('map').setView([13.715757357216745, -89.20367376203717], 13);
 
 	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -32,6 +33,67 @@
 
 	const marker = L.marker([51.5, -0.09]).addTo(map);
 
+    /*
+    class Queue{
+        //constructor de la cola
+        constructor(){
+            this.items={};
+            this.front=0;
+            this.end=0;
+        };
+
+        //metodo para encolar datos
+        enqueue(data){
+            this.items[this.end]=data;
+            this.end++;
+        };
+
+        //metodo para desencolar
+        dequeue(){
+            if(this.front===this.end){
+                return null;
+            };
+            const data=this.items[this.front];
+            this.front++;
+            return data;
+        };
+
+        //obtiene el tamanio de la cola
+        getSize(){
+            return this.end-this.front;
+        };
+
+        //sirve para ver si la cola esta vacia
+        isEmpty(){
+            if(this.getSize()===0){
+                return true;
+            }else{
+                return false;
+            };
+        };
+
+        //este metodo consulta la primera poscicion de la cola
+        peek(){
+            if(this.getSize()===0){
+                return null;
+            }else{return this,items[this.front];
+            };
+        };
+
+        //funcion que imprime todos los datos en la cola 
+        printf(){
+            if(this.getSize()===0){
+                return null;
+            };
+            
+            let result='';
+            for(let i=this.front;i<this.end;i++){
+                result+="{ "+this.items[i]+" }";
+            };
+            return result;
+        }
+    };*/
+    
     var popup = L.popup();
     function onMapClick(e) {
     popup

@@ -104,4 +104,5 @@ class ViajeController {
     }*/
 }
 
+
 module.exports = ViajeController
