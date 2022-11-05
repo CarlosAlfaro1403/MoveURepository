@@ -9,6 +9,7 @@ router.get('/crear', ViajeController.create);
 router.get('/', ViajeController.showAll);
 router.post('/', ViajeController.store);
 router.get('/ver/:id', ViajeController.show);
+router.get('/notificacion/:id', ViajeController.notificacion);
 //router.get('/eliminar/:id', ViajeController.delete);
 
 module.exports = router

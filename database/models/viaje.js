@@ -56,7 +56,7 @@ Viaje.init({
     allowNull: true
   },
   estado_viaje: {
-    type: DataTypes.CHAR(10),
+    type: DataTypes.STRING(10),
     allowNull: true
   },
   destino_viaje: {

@@ -19,7 +19,7 @@ class ViajeController {
     // metodos de la clase
     static async showAll (req, res) {
         const Viajes = await Viaje.findAll({
-            attributes: ['id_viaje', 'destino_viaje']
+            attributes: ['id_viaje', 'destino_viaje', 'estado_viaje']
         });
         res.render('viaje/viajeIndex', {
             viajes : Viajes
@@ -30,6 +30,24 @@ class ViajeController {
         const viaje = await Viaje.findByPk(req.params.id);
         const taxista = await Taxista.findByPk(viaje.id_taxista);
         res.render('viaje/ViajeShow', {
+            viaje: viaje,
+            taxista: taxista
+        });
+    }
+
+    static async notificacion (req, res) {
+        const viaje = await Viaje.findByPk(req.params.id);
+        const taxista = await Taxista.findByPk(viaje.id_taxista);
+        res.render('viaje/ViajeNotificacion', {
+            viaje: viaje,
+            taxista: taxista
+        });
+    }
+
+    static async showAllNotificacion (req, res) {
+        const viaje = await Viaje.findByPk(req.params.id);
+        const taxista = await Taxista.findByPk(viaje.id_taxista);
+        res.render('viaje/ViajeNotificacion', {
             viaje: viaje,
             taxista: taxista
         });
@@ -46,7 +64,8 @@ class ViajeController {
             console.log(req.body);
             const viaje = await Viaje.create({
                 destino_viaje: direccion,
-                id_taxista: taxista
+                id_taxista: taxista,
+                estado_viaje: 'Pendiente'
             })
             res.redirect('/viajes');
         }
