@@ -1,0 +1,30 @@
+<%-include('../base/header')-%>
+
+<% if(sede) { %>
+
+    <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header">Editar Sede</div>
+            <div class="card-body">
+                <form action="/sedes/editar/<%= sede.id_sede %>" method="POST">
+                    <div class="mb-3">
+                        <label for="sedeNombre" class="form-label">Nombre de Sede</label>
+                        <input type="text" value="<%= sede.nombre_sede  %>" class="form-control" id="sedeNombre" name="sedeNombre" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="direccion" class="form-label">Direccion</label>
+                        <input type="text" value="<%= sede.direccion_sede  %>" class="form-control" id="direccion" name="direccion" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cooperativa" class="form-label">cooperativa</label>
+                        <input type="number" value="<%= sede.id_cooperativa  %>" class="form-control" id="cooperativa" name="cooperativa" tabindex="1">
+                    </div>
+                    <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                    <a href="/sedes" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<% } %>
+<%-include('../base/footer')-%>

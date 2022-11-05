@@ -4,6 +4,7 @@ const loginController = require('../controllers/loginController');
 const indexController = require('../controllers/indexController');
 const usuarioRouter = require('./usuario')
 const viajeRouter = require('./viaje')
+const sedeRouter = require('./sede')
 
 router.get('/',loginController.login);
 router.post('/auth',loginController.auth);
@@ -12,4 +13,5 @@ router.get('/dashboard',indexController.dashboard);
 
 router.use('/usuarios', usuarioRouter);
 router.use('/viajes', viajeRouter);
+router.use('/sedes', sedeRouter);
 module.exports = router;
