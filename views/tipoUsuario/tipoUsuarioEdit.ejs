@@ -1,0 +1,21 @@
+<%-include('../base/header')-%>
+
+<% if (tipoUsuario) { %>
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nuevo Usuario</div>
+        <div class="card-body">
+            <form action="/tipoUsuarios/editar/<%= tipoUsuario.id_tipo_usuario %>" method="POST">
+                <div class="mb-3">
+                    <label for="tipoUsuarioNombre" class="form-label">Nombre Tipo Usuario</label>
+                    <input type="text" value="<%= tipoUsuario.nombre_tipo_usuario  %>" class="form-control" id="tipoUsuarioNombre" name="tipoUsuarioNombre" tabindex="1" required>
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/tipoUsuarios" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<% } %>
+
+<%-include('../base/footer')-%>

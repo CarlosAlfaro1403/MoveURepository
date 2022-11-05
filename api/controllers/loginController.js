@@ -1,4 +1,5 @@
 // var pool = require('../../database/conexion.js')
+const { localsName } = require('ejs');
 const Usuario = require('../../database/models/usuarios')
 
 exports.login = (req, res) => {
@@ -7,19 +8,30 @@ exports.login = (req, res) => {
 
 exports.auth = async(req,res)=>{
     const { usuario, password } = req.body;
-    console.log(req.body)
-    // const user = await pool.query('SELECT * FROM public.usuarios WHERE nombre_usuario = $1',[req.body.usuario]);
     const user = await Usuario.findOne({
         where: {
             nombre_usuario: usuario, password: password
         }
-    });
-    console.log(user);
-
-    req.session.user=req.body.usuario;
+    });   
     if(user){
-        let usuario=req.session.user;
-        res.redirect('/dashboard');
+        req.app.locals = {user:req.body.usuario,userName:user.nombres};
+        req.session.user=req.body.usuario;
+        if(user.password == req.body.password){
+            if(user.id_tipo_usuario==1) //Admin
+            {
+                res.redirect('dashboard');
+            }
+            else if(user.id_tipo_usuario==2) //Taxista
+            {
+                res.redirect('dashboardT');
+            }
+            else if(user.id_tipo_usuario==3) //Operador
+            {
+                res.redirect('dashboardO');
+            }
+        }else{
+            res.render('login',{message:'Contraseña no valida'});
+        }
     }else{
         res.render('login',{message:'Usuario no valido'});
     }

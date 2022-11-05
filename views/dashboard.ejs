@@ -3,16 +3,9 @@
     <h1 class="mt-4"><%= title%></h1>
     <div class="card mb-4">
         <div class="card-body">
-            <form action="/auth" method="post">
-                <div class="form-floating mb-3">
-                    <input class="form-control" id="usuario" name="usuario" />
-                    <label>Usuario</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input class="form-control" id="password" name="password" type="password" />
-                    <label>Contraseña</label>
-                </div>
-                <center><button type="submit" class="btn btn-primary">Ingresar</button></center>
+            <p>Esta pagina es para los Admin</p>
+            <form action="">
+                <input type="hidden" id="userLog" name="userLog" value="<%= user %>">
             </form>
         </div>
     </div>

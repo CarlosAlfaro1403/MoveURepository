@@ -1,0 +1,27 @@
+<%-include('../base/headerO')-%>
+
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nuevo Accidente</div>
+        <div class="card-body">
+            <form action="/accidentes" method="POST">
+                <div class="mb-3">
+                    <label for="vehiculo" class="form-label">ID del Vehiculo</label>
+                    <input type="number" class="form-control" id="vehiculo" name="vehiculo" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="costo" class="form-label">Costo del Accidente</label>
+                    <input type="number" step='0.01' class="form-control" id="costo" name="costo" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <input type="text" class="form-control" id="descripcion" name="descripcion" tabindex="1">
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/accidentes" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>

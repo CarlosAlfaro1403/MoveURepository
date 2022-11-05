@@ -1,0 +1,28 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración del Tipo Usuario</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Nombres Tipo Usuario</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% tipoUsuarios.forEach( tipoUsuario => { %>
+            <tr> 
+                <td><%= tipoUsuario.id_tipo_usuario %></td> 
+                <td><%= tipoUsuario.nombre_tipo_usuario %></td> 
+                <td>
+                    <a href="tipoUsuarios/edit/<%= tipoUsuario.id_tipo_usuario %>" class="btn btn-outline-info">Editar</a>
+                    <a href="tipoUsuarios/eliminar/<%= tipoUsuario.id_tipo_usuario %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="tipoUsuarios/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Tipo de Usuario</a>
+</table>
+
+
+<%-include('../base/footer')-%>
