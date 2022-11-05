@@ -1,4 +1,5 @@
 // var pool = require('../../database/conexion.js')
+const { localsName } = require('ejs');
 const Usuario = require('../../database/models/usuarios')
 
 exports.login = (req, res) => {
@@ -7,15 +8,14 @@ exports.login = (req, res) => {
 
 exports.auth = async(req,res)=>{
     const { usuario, password } = req.body;
-    console.log(req.body)
     const user = await Usuario.findOne({
         where: {
             nombre_usuario: usuario, password: password
         }
-    });
-    req.session.user=req.body.usuario;
+    });   
     if(user){
-        let usuario=req.session.user;
+        req.app.locals = {user:req.body.usuario,userName:user.nombres};
+        req.session.user=req.body.usuario;
         if(user.password == req.body.password){
             if(user.id_tipo_usuario==1) //Admin
             {

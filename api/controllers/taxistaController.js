@@ -1,11 +1,15 @@
+const session = require('express-session');
 const {Taxista} = require('../../database/models/index')
-const {SedeCooperativa} = require('../../database/models/index')
+const {SedeCooperativa, Usuario} = require('../../database/models/index')
 
 class TaxistaController {
 
     static async create (req, res) {
+        const user = await Usuario.findOne({
+            where: {nombre_usuario:req.app.locals.user}
+        })
         const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
+            where:{id_sede: user.id_sede}
         });
         res.render('taxista/taxistaCreate',{
             sedes: Sedes
@@ -13,9 +17,12 @@ class TaxistaController {
     }
 
     static async edit (req, res) {
+        const user = await Usuario.findOne({
+            where: {nombre_usuario:req.app.locals.user}
+        })
         const taxista = await Taxista.findByPk(req.params.id);
         const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
+            where:{id_sede: user.id_sede}
         });
         res.render('taxista/taxistaEdit', {
             taxista : taxista.dataValues,
@@ -24,9 +31,13 @@ class TaxistaController {
     }
 
     static async showAll (req, res) {
+        const user = await Usuario.findOne({
+            where: {nombre_usuario:req.app.locals.user}
+        })
         const taxistas = await Taxista.findAll({
-            attributes:['id_taxista','id_sede', 'nombre_taxista','apellido_taxista','dui_taxista','num_circulacion','edad_taxista','telefono_taxista','posee_auto']
+             where:{id_sede: user.id_sede}
         }); 
+        console.log(taxistas);
         const Sedes = await SedeCooperativa.findAll({
             attributes:['id_sede', 'nombre_sede']
         });
@@ -65,6 +76,14 @@ class TaxistaController {
 
     static async update (req, res) {
         const {taxistaNombre, taxistaIdSede, taxistaApellido,taxistaDui,taxistaNumCirculacion,taxistaEdad,taxistaTelefono,taxistaPoseeAuto } = req.body;
+        console.log(req.body.taxistaPoseeAuto);
+        var poseeAuto='false';
+        if(req.body.taxistaPoseeAuto != undefined){
+            poseeAuto = 'True';
+        }
+        else{
+            poseeAuto = 'False';
+        }
         if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
             console.log('Campos incompletos');
         }else {
@@ -76,7 +95,7 @@ class TaxistaController {
                 num_circulacion: taxistaNumCirculacion,
                 edad_taxista: taxistaEdad,
                 telefono_taxista: taxistaTelefono,
-                posee_auto: taxistaPoseeAuto
+                posee_auto: poseeAuto
             }, {
                 where: {
                     id_taxista: req.params.id
