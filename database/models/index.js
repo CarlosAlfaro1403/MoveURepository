@@ -3,6 +3,7 @@ const TipoUsuario = require('./tipo_usuario');
 const SedeCooperativa = require('./sede_cooperativa');
 const Viaje = require('./viaje');
 const Taxista = require('./taxista');
+const Accidente = require('./accidente');
 
 module.exports = {
     Usuario,
@@ -10,4 +11,5 @@ module.exports = {
     SedeCooperativa,
     Viaje,
     Taxista,
+    Accidente,
   }
