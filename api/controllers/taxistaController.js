@@ -1,5 +1,5 @@
 const session = require('express-session');
-const {Taxista} = require('../../database/models/index')
+const {Taxista,Vehiculo,Viaje} = require('../../database/models/index')
 const {SedeCooperativa, Usuario} = require('../../database/models/index')
 
 class TaxistaController {
@@ -56,6 +56,14 @@ class TaxistaController {
 
     static async store (req, res) {
         const {taxistaNombre, taxistaIdSede, taxistaApellido,taxistaDui,taxistaNumCirculacion,taxistaEdad,taxistaTelefono,taxistaPoseeAuto } = req.body;
+        var poseeAuto;
+        if(req.body.taxistaPoseeAuto){
+            poseeAuto = 'True';
+        }
+        else{
+            poseeAuto = 'False';
+        }
+
         if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
             console.log('Campos incompletos');
         }else {
@@ -68,7 +76,7 @@ class TaxistaController {
                 num_circulacion: taxistaNumCirculacion,
                 edad_taxista: taxistaEdad,
                 telefono_taxista: taxistaTelefono,
-                posee_auto: taxistaPoseeAuto
+                posee_auto: poseeAuto
             })
             res.redirect('/taxistas');
         }
@@ -78,7 +86,7 @@ class TaxistaController {
         const {taxistaNombre, taxistaIdSede, taxistaApellido,taxistaDui,taxistaNumCirculacion,taxistaEdad,taxistaTelefono,taxistaPoseeAuto } = req.body;
         console.log(req.body.taxistaPoseeAuto);
         var poseeAuto='false';
-        if(req.body.taxistaPoseeAuto != undefined){
+        if(req.body.taxistaPoseeAuto){
             poseeAuto = 'True';
         }
         else{
@@ -106,14 +114,27 @@ class TaxistaController {
     }
 
     static async delete (req, res) {
-        console.log(req.params);
-
-        const sede = await Taxista.destroy({
-            where: {
-                id_taxista: req.params.id
-            }
+        const vehiculo = await Vehiculo.findAll({
+            where:{id_taxista:req.params.id}
         });
-        res.redirect('/taxistas');
+        const viaje = await Viaje.findAll({
+            where:{id_taxista:req.params.id}
+        });
+
+        if(vehiculo || viaje){
+            //alert('No se puede eliminar, el taxista esat asociado a un vehiculo o un viaje');
+            console.log('No se puede eliminar, el taxista esat asociado a un vehiculo o un viaje')
+        }
+        else{
+            console.log(req.params);
+
+            const sede = await Taxista.destroy({
+                where: {
+                    id_taxista: req.params.id
+                }
+            });
+            res.redirect('/taxistas');
+        }
     }
 }
 module.exports = TaxistaController

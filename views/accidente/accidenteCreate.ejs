@@ -6,8 +6,12 @@
         <div class="card-body">
             <form action="/accidentes" method="POST">
                 <div class="mb-3">
-                    <label for="vehiculo" class="form-label">ID del Vehiculo</label>
-                    <input type="number" class="form-control" id="vehiculo" name="vehiculo" tabindex="1">
+                    <label for="vehiculo" class="form-label">Vehiculo</label>
+                    <select class="form-control" name="vehiculo" id="vehiculo" tabindex="1">
+                        <% vehiculos.forEach( vehiculo => { %>
+                            <option value="<%= vehiculo.id_vehiculo %>"><%= vehiculo.matricula %></option>
+                        <% }) %>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="costo" class="form-label">Costo del Accidente</label>

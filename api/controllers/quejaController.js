@@ -1,4 +1,4 @@
-const {Queja} = require('../../database/models/index')
+const {Queja,Viaje,Taxista,Cliente} = require('../../database/models/index')
 
 // exports.user = (req, res) => {
 //     res.render('usuarioCreate');
@@ -7,25 +7,61 @@ const {Queja} = require('../../database/models/index')
 class QuejaController {
 
     // redireccionar a la vista de crear usuario
-    static create (req, res) {
-        res.render('queja/quejaCreate');
+    static async create (req, res) {
+        const clientes = await Cliente.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const taxistas = await Taxista.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const viajes = await Viaje.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        res.render('queja/quejaCreate',{
+            clientes: clientes,
+            taxistas: taxistas,
+            viajes: viajes
+        });
     }
 
     static async edit (req, res) {
+        const clientes = await Cliente.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const taxistas = await Taxista.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const viajes = await Viaje.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
         const queja = await Queja.findByPk(req.params.id);
-        console.log(queja);
         res.render('queja/quejaEdit', {
-            queja : queja.dataValues
+            queja : queja.dataValues,
+            clientes: clientes,
+            taxistas: taxistas,
+            viajes: viajes
         });
     }
 
     // metodos de la clase
     static async showAll (req, res) {
+        const clientes = await Cliente.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const taxistas = await Taxista.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
+        const viajes = await Viaje.findAll({
+            where: { id_sede: req.app.locals.idSede}
+        });
         const Quejas = await Queja.findAll({
-            attributes: ['id_queja', 'id_cliente', 'id_viaje', 'id_taxista', 'nombre_queja', 'descripcion_queja']
+            where: { id_sede: req.app.locals.idSede}
         });
         res.render('queja/quejaIndex', {
-            quejas : Quejas
+            quejas : Quejas,
+            clientes: clientes,
+            taxistas: taxistas,
+            viajes: viajes
         });
     }
 
@@ -50,21 +86,26 @@ class QuejaController {
                 id_viaje: idViaje,
                 id_taxista: idTaxista,
                 nombre_queja: nombreQueja,
-                descripcion_queja: descripcionQueja
+                descripcion_queja: descripcionQueja,
+                id_sede: req.app.locals.idSede
             })
             res.redirect('/quejas');
         }
     }
 
     static async update (req, res) {
-        const { idCliente, idViaje, idTaxista, nombreQueja, descripcionQueja } = req.body;
-        if(!idCliente || !idViaje || !idTaxista || !nombreQueja || !descripcionQueja) {
+        const quejaU = await Queja.findOne({
+            where: {id_queja: req.params.id}
+        });
+        const { nombreQueja, descripcionQueja } = req.body;
+        console.log(req.body);
+        if(!nombreQueja || !descripcionQueja) {
             console.log('Campos incompletos');
         }else {
             const queja = await Queja.update({
-                id_cliente: idCliente,
-                id_viaje: idViaje,
-                id_taxista: idTaxista,
+                id_cliente: quejaU.id_cliente,
+                id_viaje: quejaU.id_viaje,
+                id_taxista: quejaU.id_taxista,
                 nombre_queja: nombreQueja,
                 descripcion_queja: descripcionQueja
             }, {

@@ -1,4 +1,4 @@
-<%-include('../base/header')-%>
+<%-include('../base/headerO')-%>
 
 <% if (queja) { %>
     <div class="container mt-4">
@@ -7,16 +7,40 @@
             <div class="card-body">
                 <form action="/quejas/editar/<%= queja.id_queja %>" method="POST">
                     <div class="mb-3">
-                        <label for="idCliente" class="form-label">Id Cliente</label>
-                        <input type="text" value="<%= queja.id_cliente  %>" class="form-control" id="idCliente" name="idCliente" tabindex="1">
+                        <label for="idCliente" class="form-label">Cliente</label>
+                        <select class="form-control" name="idCliente" id="idCliente" tabindex="1" disabled>
+                            <% clientes.forEach( cliente => { %>
+                                <% if(cliente.id_cliente === queja.id_cliente) { %>
+                                    <option selected="true" value="<%= cliente.id_cliente %>"><%= cliente.nombre_cliente %></option>
+                                <% } else { %>
+                                    <option value="<%= sede.id_sede %>"><%= sede.nombre_sede %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="idViaje" class="form-label">Id Viaje</label>
-                        <input type="text" value="<%= queja.id_viaje  %>" class="form-control" id="idViaje" name="idViaje" tabindex="1">
+                        <label for="idViaje" class="form-label">Viaje</label>
+                        <select class="form-control" name="idViaje" id="idViaje" tabindex="1" disabled>
+                            <% viajes.forEach( viaje => { %>
+                                <% if(viaje.id_viaje === queja.id_viaje) { %>
+                                    <option selected="true" value="<%= viaje.id_viaje %>"><%= viaje.destino_viaje %></option>
+                                <% } else { %>
+                                    <option value="<%= viaje.id_viaje %>"><%= viaje.destino_viaje %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div class="mb-3">
-                        <label for="idTaxista" class="form-label">Id Taxista</label>
-                        <input type="text" value="<%= queja.id_taxista  %>" class="form-control" id="idTaxista" name="idTaxista" tabindex="1">
+                        <label for="idTaxista" class="form-label">Taxista</label>
+                        <select class="form-control" name="idTaxista" id="idTaxista" tabindex="1" disabled>
+                            <% taxistas.forEach( taxista => { %>
+                                <% if(taxista.id_taxista === queja.id_taxista) { %>
+                                    <option selected="true" value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                                <% } else { %>
+                                    <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="nombreQueja" class="form-label">Nombre</label>

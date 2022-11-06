@@ -1,0 +1,35 @@
+<%-include('../base/headerO')-%>
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nuevo Vehiculo</div>
+        <div class="card-body">
+            <div class="card-footer text-center py-3">
+                <% if(locals.message){ %>
+                    <div class="alert alert-danger" role="alert" ><%=message %></div>
+                <% } %>
+            </div>
+            <form action="/vehiculos" method="POST">
+                <div class="mb-3">
+                    <label for="names" class="form-label">Matricula</label>
+                    <input type="text" class="form-control" id="matricula" name="matricula" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="marca" name="marca" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="modelo" name="modelo" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="anio" class="form-label">Año</label>
+                    <input type="number" maxlength="4" class="form-control" id="anio" name="anio" tabindex="1" required>
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/vehiculos" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>
