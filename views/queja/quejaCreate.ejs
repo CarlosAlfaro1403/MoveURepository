@@ -1,4 +1,4 @@
-<%-include('../base/header')-%>
+<%-include('../base/headerO')-%>
 
 <div class="container mt-4">
     <div class="card border-secondary">
@@ -6,16 +6,28 @@
         <div class="card-body">
             <form action="/quejas" method="POST">
                 <div class="mb-3">
-                    <label for="idCliente" class="form-label">Id Cliente</label>
-                    <input type="text" class="form-control" id="idCliente" name="idCliente" tabindex="1">
+                    <label for="idCliente" class="form-label">Cliente</label>
+                    <select class="form-control" name="idCliente" id="idCliente" tabindex="1">
+                        <% clientes.forEach( cliente => { %>
+                            <option value="<%= cliente.id_cliente %>"><%= cliente.nombre_cliente %></option>
+                        <% }) %>
+                    </select>
                 </div>
                 <div class="mb-3">
-                    <label for="idViaje" class="form-label">Id Viaje</label>
-                    <input type="text" class="form-control" id="idViaje" name="idViaje" tabindex="1">
+                    <label for="idViaje" class="form-label">Viaje</label>
+                    <select class="form-control" name="idViaje" id="idViaje" tabindex="1">
+                        <% viajes.forEach( viaje => { %>
+                            <option value="<%= viaje.id_viaje %>"><%= viaje.destino_viaje %></option>
+                        <% }) %>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="idTaxista" class="form-label">Id Taxista</label>
-                    <input type="text" class="form-control" id="idTaxista" name="idTaxista" tabindex="1">
+                    <select class="form-control" name="idTaxista" id="idTaxista" tabindex="1">
+                        <% taxistas.forEach( taxista => { %>
+                            <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                        <% }) %>
+                    </select>
                 </div>
                 <div class="mb-3">
                     <label for="nombreQueja" class="form-label">Nombre</label>

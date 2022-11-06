@@ -1,143 +1,197 @@
-<%-include('../base/header')-%>
+<%-include('../base/headerT')-%>
 
-<% if (viaje) { %>
-    <div data-aos="zoom-in" class="container mt-4">
-        <div class="card border-secondary">
-            <div class="card-header">Ver Viaje</div>
-            <div class="card-body">
-                
-                <div class="row ">
+  <% if (viaje) { %>
+    <div data-aos="zoom-in" class="container">
+      <div class="card border-secondary">
+        <div class="card-header">Ver Viaje</div>
+        <div class="card-body">
+          <div class="row ">
+            <div class="col-md-6">
+              <h3>Detalle de viaje</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Ubicacion de cliente</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Coordenadas</th>
+                    <td id="destino"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Colonia</th>
+                    <td id="destino_1"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Distrito</th>
+                    <td id="destino_2"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ciudad</th>
+                    <td id="destino_3"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Municipio</th>
+                    <td id="destino_4"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Departamento</th>
+                    <td id="destino_5"></td>
+                  </tr>
 
-                    <div class="col-md-6">
-                        <h3>Detalle de viaje</h3>
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th rowspan="2">Ubicacion de cliente</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Coordenadas</th>
-                                <td id="destino"><%= viaje.cliente_coordenadas  %></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Colonia</th>
-                                <td id="destino_1"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Distrito</th>
-                                <td id="destino_2"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Ciudad</th>
-                                <td id="destino_3"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Municipio</th>
-                                <td id="destino_4"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Departamento</th>
-                                <td id="destino_5"></td>
-                              </tr>
-                              
-                            </tbody>
-                          </table>
-                          <table class="table">
-                            <thead>
-                              <tr>
-                                <th rowspan="2">Detalle destino</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Coordenadas</th>
-                                <td id="destino_servicio_1"><%= viaje.destino_viaje  %></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Distancia</th>
-                                <td id="destino_servicio_2"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Tiempo</th>
-                                <td id="destino_servicio_3"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Costo</th>
-                                <td id="destino_servicio_4"></td>
-                              </tr>
-                              
-                              
-                            </tbody>
-                          </table>
-                    </div>
-                
-                    <div class="col-md-6">
-                        <h3>Seleccione ruta</h3>
-                        <p>Deslice el punto de encuentro con cliente hacia la ubicación donde desea ir el cliente</p>
-                        <div id="map" style="width: 550px; height: 400px;"></div>
-                    </div>
-
-                    
-                
-                  </div>
-                  <br>
-                  <div class="row">
-                    <div class="col text-center">
-                      <button class="btn btn-success">Iniciar</button>
-                    </div>
-                  </div>
-                
-                
-                
+                </tbody>
+              </table>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Detalle destino</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Coordenadas</th>
+                    <td id="destino_servicio_1">
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Distancia</th>
+                    <td id="destino_servicio_2"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Tiempo</th>
+                    <td id="destino_servicio_3"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Costo</th>
+                    <td id="destino_servicio_4"></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <script>
 
-                var direccionArr = $( "#destino" ).text().split(',');
+            <div class="col-md-6">
+              <h3>Seleccione ruta</h3>
+              <p>Deslice el punto de encuentro con cliente hacia la ubicación donde desea ir el cliente</p>
+              <div id="map" style="width: 550px; height: 400px;"></div>
+            </div>
 
-                const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
-        
-                const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 17,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
-            
-                const marker = L.marker([51.5, -0.09]).addTo(map);
+          </div>
+          <br>
+          <div class="row">
+            <div class="col text-center">
+              <div id="area">
+              </div>
+            </div>
+          </div>
 
-                    console.log($( "#destino" ).text());
-                    marker.setLatLng([direccionArr[0], direccionArr[1]]).update();
 
-                L.Routing.control({
-                    waypoints: [
-                        L.latLng([direccionArr[0], direccionArr[1]]),
-                        L.latLng([direccionArr[0], direccionArr[1]])
-                    ],
-                    routeWhileDragging: true
-                }).on('routeselected', function(e) {
-                    var route = e.route;
-                    var distancia_total = route.summary.totalDistance;
-                    var tiempo_total = Math.round((route.summary.totalTime/60))
-                    var costo = 1.10 + 0.1*tiempo_total + 0.3*distancia_total/1000
-                    $( "#destino_servicio_2" ).text(distancia_total+" metros");
-                    $( "#destino_servicio_3" ).text( tiempo_total +" minutos");
-                    $( "#destino_servicio_4" ).text("$ "+ costo.toFixed(2));
-                    $( "#destino_servicio_1" ).text(route.inputWaypoints[1].latLng.lat + "," + route.inputWaypoints[1].latLng.lng);
-                })
-                .addTo(map);
 
-                str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+direccionArr[0]+"&lon="+direccionArr[1];
-                $.get(str_direccion, function(data){
-                      $( "#destino_1" ).text(data.address.neighbourhood);
-                      $( "#destino_2" ).text(data.address.city_district);
-                      $( "#destino_3" ).text(data.address.city);
-                      $( "#destino_4" ).text(data.address.county);
-                      $( "#destino_5" ).text(data.address.state);
-                });
-
-            </script>
         </div>
-    </div>
-<% } %>
+        <script>
 
-<%-include('../base/footer')-%>
+          function htmlDecode(input) {
+            var e = document.createElement('div');
+            e.innerHTML = input;
+            return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+          }
+
+          var direccionArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.cliente_coordenadas) %>"));
+          var idViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.id_viaje) %>"));
+          var estadoViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.estado_viaje) %>"));
+          direccionArr = direccionArr.split(',');
+          console.log(estadoViaje)
+
+          if (estadoViaje == "Confirmado"){
+            console.log("hola")
+            let btn_finalizar = document.createElement("button");
+            btn_finalizar.innerHTML = "Finalizar";
+            btn_finalizar.id = "finalizar_boton"
+            btn_finalizar.className = "btn btn-danger"
+            var area = document.getElementById('area');
+            area.appendChild(btn_finalizar);
+          }
+          else {
+            let btn_iniciar = document.createElement("button");
+            btn_iniciar.innerHTML = "Iniciar";
+            btn_iniciar.id = "iniciar_boton"
+            btn_iniciar.className = "btn btn-success"
+            var area = document.getElementById('area');
+            area.appendChild(btn_iniciar);
+          }
+
+          
+          //$("#destino").text(parseFloat(direccionArr[0]).toFixed(3)+","+parseFloat(direccionArr[1]).toFixed(3));
+
+          const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
+
+          const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 17,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+
+          const marker = L.marker([51.5, -0.09]).addTo(map);
+          marker.setLatLng([direccionArr[0], direccionArr[1]]).update();
+
+          L.Routing.control({
+            waypoints: [
+              L.latLng([direccionArr[0], direccionArr[1]]),
+              L.latLng([direccionArr[0], direccionArr[1]])
+            ],
+            routeWhileDragging: true
+          }).on('routeselected', function (e) {
+            var route = e.route;
+            var distancia_total = route.summary.totalDistance;
+            var tiempo_total = Math.round((route.summary.totalTime / 60))
+            let destino = route.inputWaypoints[1].latLng.lat.toFixed(3) + "," + route.inputWaypoints[1].latLng.lng.toFixed(3)
+            if (distancia_total > 20000) {
+              var costo = 10.20 + 0.2 * tiempo_total + 0.6 * distancia_total / 1000
+            } else {
+              var costo = 1.50 + 0.2 * tiempo_total + 0.5 * distancia_total / 1000
+            }
+            $("#destino_servicio_2").text(distancia_total + " metros");
+            $("#destino_servicio_3").text(tiempo_total + " minutos");
+            $("#destino_servicio_4").text("$ " + costo.toFixed(2));
+            $("#destino_servicio_1").text(destino);
+          })
+            .addTo(map);
+
+          str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + direccionArr[0] + "&lon=" + direccionArr[1];
+          $.get(str_direccion, function (data) {
+            $("#destino_1").text(data.address.neighbourhood);
+            $("#destino_2").text(data.address.city_district);
+            $("#destino_3").text(data.address.city);
+            $("#destino_4").text(data.address.county);
+            $("#destino_5").text(data.address.state);
+          });
+
+          $( "#iniciar_boton" ).click(function() {
+            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Confirmado', destino_coordenadas: destino})
+            .done(function (data) {
+              alert("second success");
+            })
+            .fail(function (data) {
+              alert("error");
+            });
+            window.location.reload();
+          });
+
+          $( "#finalizar_boton" ).click(function() {
+            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Finalizado' })
+            .done(function (data) {
+              alert("second success");
+              window.location.href = "/viajes/"
+            })
+            .fail(function (data) {
+              alert("error");
+            });
+          });
+
+          
+
+        </script>
+      </div>
+    </div>
+    <% } %>
+
+      <%-include('../base/footer')-%>

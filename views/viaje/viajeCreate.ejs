@@ -12,7 +12,11 @@
                 </div>
                 <div class="mb-3">
                     <label for="taxista" class="form-label">Taxista</label>
-                    <input type="text" class="form-control" id="taxista" name="taxista" tabindex="1">
+                    <select class="form-control" name="taxista" id="taxista" tabindex="1">
+                        <% taxistas.forEach( taxista => { %>
+                            <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                        <% }) %>
+                    </select>
                 </div>
                 <input type="hidden" id="cliente_ubicacion" name="cliente_ubicacion" value="">
                 <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>

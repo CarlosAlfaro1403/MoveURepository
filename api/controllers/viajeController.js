@@ -1,11 +1,16 @@
-const {Viaje} = require('../../database/models/index')
+const {Viaje,Usuario} = require('../../database/models/index')
 const {Taxista} = require('../../database/models/index')
 
 class ViajeController {
 
     // redireccionar a la vista de crear usuario
-    static create (req, res) {
-        res.render('viaje/viajeCreate');
+    static async create (req, res) {
+        const taxistas = await Taxista.findAll({
+            where:{ id_sede: req.app.locals.idSede}
+        })
+        res.render('viaje/viajeCreate',{
+            taxistas:taxistas
+        });
     }
 
     /*static async edit (req, res) {
@@ -46,19 +51,42 @@ class ViajeController {
 
     static async showAllNotificacion (req, res) {
         const Viajes = await Viaje.findAll({
-            attributes: ['id_viaje', 'estado_viaje', 'cliente_ubicacion']
-        });
+            where: {
+              estado_viaje: 'Pendiente'
+            }
+          });
         res.render('viaje/viajeNotificacionIndex', {
             viajes : Viajes
         });
+    }
+
+    static async updateNotificacion (req, res) {
+        const { destino_coordenadas, estado_viaje } = req.body;
+        if (!destino_coordenadas){
+            req.body.destino_coordenadas = '';
+        }
+        if(!estado_viaje) {
+            // res.render('usuario/usuarioCreate', {
+            //     error: 'Campos incompletos'
+            // });
+            console.log('Campos incompletos');
+        }else {
+            const viaje = await Viaje.update({
+                estado_viaje: estado_viaje,
+                destino_coordenadas: destino_coordenadas
+            }, {
+                where: {
+                    id_viaje: req.params.id
+                }
+            });
+            res.redirect('/viajes');
+            console.log('Viaje actualizado');
+        }
     }
     
     static async store (req, res) {
         const { direccion, taxista, cliente_ubicacion} = req.body;
         if(!direccion || !taxista || !cliente_ubicacion) {
-            // res.render('usuario/usuarioCreate', {
-            //     error: 'Campos incompletos'
-            // });
             console.log('Campos incompletos');
         }else {
             console.log(req.body);
@@ -66,7 +94,8 @@ class ViajeController {
                 cliente_coordenadas: direccion,
                 cliente_ubicacion: cliente_ubicacion,
                 id_taxista: taxista,
-                estado_viaje: 'Pendiente'
+                estado_viaje: 'Pendiente',
+                id_sede: req.app.locals.idSede
             })
             res.redirect('/viajes');
         }

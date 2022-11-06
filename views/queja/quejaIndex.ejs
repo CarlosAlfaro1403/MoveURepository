@@ -1,13 +1,13 @@
-<%-include('../base/header')-%>
+<%-include('../base/headerO')-%>
 
 <h2>Bienvenido a la administración de Quejas</h2>
 <table class="table table-bordered table-striped text-center mt-4">
     <thead>
         <tr class="bg-primary text-white">
             <th scope="col">Id</th>
-            <th scope="col">Id Cliente</th>
-            <th scope="col">Id Viaje</th>
-            <th scope="col">Id Taxista</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Viaje</th>
+            <th scope="col">Taxista</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
             <th scope="col">Acciones</th>
@@ -18,11 +18,26 @@
         <% quejas.forEach( queja => { %>
             <tr>
                 <td><%= queja.id_queja %></td>
-                <td><%= queja.id_cliente %></td>
-                <td><%= queja.id_viaje %><</td>
-                <td><%= queja.id_taxista %><</td>
-                <td><%= queja.nombre_queja %><</td>
-                <td><%= queja.descripcion_queja %><</td>
+                <td><% clientes.forEach( cliente => { %>
+                        <% if(cliente.id_cliente === queja.id_cliente) { %>
+                            <%= cliente.nombre_cliente %>
+                        <% } %>
+                    <% }) %>
+                </td> 
+                <td><% viajes.forEach( viaje => { %>
+                        <% if(viaje.id_viaje === queja.id_viaje) { %>
+                            <%= viaje.destino_viaje %>
+                        <% } %>
+                    <% }) %>
+                </td> 
+                <td><% taxistas.forEach( taxista => { %>
+                        <% if(taxista.id_taxista === queja.id_taxista) { %>
+                            <%= taxista.nombre_taxista %>
+                        <% } %>
+                    <% }) %>
+                </td>
+                <td><%= queja.nombre_queja %></td>
+                <td><%= queja.descripcion_queja %></td>
                 <td>
                     <a href="quejas/edit/<%= queja.id_queja %>" class="btn btn-outline-info">Editar</a>
                     <a href="quejas/eliminar/<%= queja.id_queja %>" class="btn btn-outline-danger">Eliminar</a>

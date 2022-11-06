@@ -8,7 +8,6 @@ class SedeController {
 
     static async edit (req, res) {
         const sede = await SedeCooperativa.findByPk(req.params.id);
-        console.log(sede);
         res.render('sede/sedeEdit', {
             sede : sede.dataValues
         });

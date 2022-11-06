@@ -14,7 +14,7 @@ exports.auth = async(req,res)=>{
         }
     });   
     if(user){
-        req.app.locals = {user:req.body.usuario,userName:user.nombres};
+        req.app.locals = {user:req.body.usuario,userName:user.nombres,idSede:user.id_sede};
         req.session.user=req.body.usuario;
         if(user.password == req.body.password){
             if(user.id_tipo_usuario==1) //Admin
@@ -23,7 +23,7 @@ exports.auth = async(req,res)=>{
             }
             else if(user.id_tipo_usuario==2) //Taxista
             {
-                res.redirect('dashboardT');
+                res.redirect('/viajes/notificaciones');
             }
             else if(user.id_tipo_usuario==3) //Operador
             {

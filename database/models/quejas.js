@@ -55,6 +55,14 @@ Queja.init({
     type: DataTypes.STRING(255),
     allowNull: true
   },
+  id_sede: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'sede_cooperativa',
+      key: 'id_sede'
+    }
+  }
 }, {
   sequelize: connection.connect(),
   tableName: 'queja',

@@ -7,7 +7,16 @@
             <div class="card-body">
                 <form action="/accidentes/editar/<%= accidente.id_accidente %>" method="POST">
                     <div class="mb-3">
-                        <label for="vehiculo" class="form-label">ID del Accidente</label>
+                        <label for="vehiculo" class="form-label">Vehiculo</label>
+                        <select class="form-control" name="vehiculo" id="vehiculo" tabindex="1">
+                            <% vehiculos.forEach( vehiculo => { %>
+                                <% if(vehiculo.id_vehiculo === accidente.id_vehiculo) { %>
+                                    <option selected="true" value="<%= vehiculo.id_vehiculo %>"><%= vehiculo.matricula %></option>
+                                <% } else { %>
+                                    <option value="<%= vehiculo.id_vehiculo %>"><%= vehiculo.matricula %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                         <input type="number" value="<%= accidente.id_vehiculo  %>" class="form-control" id="vehiculo" name="vehiculo" tabindex="1">
                     </div>
                     <div class="mb-3">
