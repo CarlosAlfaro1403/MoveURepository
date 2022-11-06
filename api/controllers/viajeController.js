@@ -37,10 +37,20 @@ class ViajeController {
 
     static async notificacion (req, res) {
         const viaje = await Viaje.findByPk(req.params.id);
+        if (viaje.estado_viaje == "Confirmado"){
+            var titulo = "Ruta seleccionada"
+            var descripcion = "Lleve al cliente al destino seleccionado, luego precione Finalizar"
+        }
+        else {
+            var titulo = "Seleccione ruta"
+            var descripcion = "Deslice el punto de encuentro con cliente hacia la ubicación donde desea ir el cliente"
+        }
         const taxista = await Taxista.findByPk(viaje.id_taxista);
         res.render('viaje/ViajeNotificacion', {
             viaje: viaje,
-            taxista: taxista
+            taxista: taxista,
+            titulo: titulo,
+            descripcion: descripcion
         });
     }
 
@@ -91,6 +101,7 @@ class ViajeController {
             const viaje = await Viaje.create({
                 cliente_coordenadas: direccion,
                 cliente_ubicacion: cliente_ubicacion,
+                destino_coordenadas: direccion,
                 id_taxista: taxista,
                 estado_viaje: 'Pendiente'
             })

@@ -1,97 +1,145 @@
 <%-include('../base/headerO')-%>
 
-<% if (viaje) { %>
+  <% if (viaje) { %>
     <div data-aos="zoom-in" class="container mt-4">
-        <div class="card border-secondary">
-            <div class="card-header">Ver Viaje</div>
-            <div class="card-body">
-                
-                <div class="row ">
+      <div class="card border-secondary">
+        <div class="card-header">Ver Viaje</div>
+        <div class="card-body">
 
-                    <div class="col-md-6">
-                        <h3>Detalle de viaje</h3>
-                        <table class="table">
-                            <thead>
-                              <tr>
-                                <th scope="col">ID de Viaje</th>
-                                <th scope="col"><%= viaje.id_viaje %></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">Coordenadas</th>
-                                <td id="destino"><%= viaje.cliente_coordenadas  %></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Colonia</th>
-                                <td id="destino_1"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Distrito</th>
-                                <td id="destino_2"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Ciudad</th>
-                                <td id="destino_3"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Municipio</th>
-                                <td id="destino_4"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Departamento</th>
-                                <td id="destino_5"></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">Nombre Taxista</th>
-                                <td><%= taxista.nombre_taxista  %> <%= taxista.apellido_taxista  %></td>
-                              </tr>
-                              <tr>
-                                <th scope="row">DUI Taxista</th>
-                                <td><%= taxista.dui_taxista  %></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                    </div>
-                
-                    <div class="col-md-6">
-                        <h3>Monitorizacion</h3>
-                        <div id="map" style="width: 550px; height: 400px;"></div>
-                    </div>
-                
-                  </div>
-                
-                
-                
+          <div class="row ">
+
+            <div class="col-md-6">
+              <h3>Detalle de viaje</h3>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID de Viaje</th>
+                    <th scope="col">
+                      <%= viaje.id_viaje %>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Coordenadas</th>
+                    <td id="destino">
+                      <%= viaje.cliente_coordenadas %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Colonia</th>
+                    <td id="destino_1"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Distrito</th>
+                    <td id="destino_2"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ciudad</th>
+                    <td id="destino_3"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Municipio</th>
+                    <td id="destino_4"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Departamento</th>
+                    <td id="destino_5"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Nombre Taxista</th>
+                    <td>
+                      <%= taxista.nombre_taxista %>
+                        <%= taxista.apellido_taxista %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">DUI Taxista</th>
+                    <td>
+                      <%= taxista.dui_taxista %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <script>
 
-                var direccionArr = $( "#destino" ).text().split(',');
+            <div class="col-md-6">
+              <h3>Monitorizacion</h3>
+              <div id="map" style="width: 550px; height: 400px;"></div>
+            </div>
 
-                const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
-        
-                const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                }).addTo(map);
-            
-                const marker = L.marker([51.5, -0.09]).addTo(map);
+          </div>
 
-                    console.log($( "#destino" ).text());
-                    marker.setLatLng([direccionArr[0], direccionArr[1]]).update(); 
-                    console.log( "ready!" );
-                    str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+direccionArr[0]+"&lon="+direccionArr[1];
-                    console.log(str_direccion)
-                    $.get(str_direccion, function(data){
-                        $( "#destino_1" ).text(data.address.neighbourhood);
-                        $( "#destino_2" ).text(data.address.city_district);
-                        $( "#destino_3" ).text(data.address.city);
-                        $( "#destino_4" ).text(data.address.county);
-                        $( "#destino_5" ).text(data.address.state);
-                    });
-            </script>
+          <div class="row justify-content-center">
+            <div class="col-11 col-sm-9 col-md-7 
+                        col-lg-6 col-xl-5 text-center p-0 mt-3 mb-2">
+              <div class="px-0 pt-4 pb-0 mt-3 mb-3">
+                <form id="form">
+                  <ul id="progressbar">
+                    <li id="paso1">
+                      <strong>Pendiente</strong>
+                    </li>
+                    <li id="paso2"><strong>En ruta</strong></li>
+                    <li id="paso3"><strong>Finalizado</strong></li>
+                  </ul>
+                  <br>
+                </form>
+              </div>
+            </div>
+          </div>
+
         </div>
-    </div>
-<% } %>
+        <script>
+          function htmlDecode(input) {
+            var e = document.createElement('div');
+            e.innerHTML = input;
+            return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+          }
 
-<%-include('../base/footer')-%>
+          var direccionArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.cliente_coordenadas) %>"));
+          var estadoViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.estado_viaje) %>"));
+
+          direccionArr = direccionArr.split(',');
+
+          const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
+
+          const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+
+          // Sistema de barra de progreso de pasos 
+
+          var paso1 = document.getElementById('paso1');
+          var paso2 = document.getElementById('paso2');
+          var paso3 = document.getElementById('paso3');
+
+          if (estadoViaje == "Pendiente ") {
+            paso1.classList.add("active");
+          }
+          if (estadoViaje == "Confirmado") {
+            paso2.classList.add("active");
+          }
+          if (estadoViaje == "Finalizado") {
+            paso3.classList.add("active");
+          }
+
+
+          const marker = L.marker([51.5, -0.09]).addTo(map);
+
+          marker.setLatLng([direccionArr[0], direccionArr[1]]).update();
+          str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=" + direccionArr[0] + "&lon=" + direccionArr[1];
+          console.log(str_direccion)
+          $.get(str_direccion, function (data) {
+            $("#destino_1").text(data.address.neighbourhood);
+            $("#destino_2").text(data.address.city_district);
+            $("#destino_3").text(data.address.city);
+            $("#destino_4").text(data.address.county);
+            $("#destino_5").text(data.address.state);
+          });
+        </script>
+      </div>
+    </div>
+    <% } %>
+
+      <%-include('../base/footer')-%>
