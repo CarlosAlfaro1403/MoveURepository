@@ -39,6 +39,11 @@
         <% }) %>
     </tbody> 
     <a href="taxistas/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Taxista</a>
+    <div class="card-footer text-center py-3">
+        <% if(locals.message){ %>
+            <div class="alert alert-danger" role="alert" ><%=message %></div>
+        <% } %>
+    </div>
 </table>
 
 

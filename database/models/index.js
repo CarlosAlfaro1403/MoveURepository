@@ -5,6 +5,9 @@ const Queja = require('./quejas');
 const Viaje = require('./viaje');
 const Taxista = require('./taxista');
 const Accidente = require('./accidente');
+const Cliente = require('./cliente');
+const Vehiculo = require('./vehiculo');
+const Cooperativa = require('./cooperativa');
 
 module.exports = {
     Usuario,
@@ -14,4 +17,7 @@ module.exports = {
     Viaje,
     Taxista,
     Accidente,
+    Cliente,
+    Vehiculo,
+    Cooperativa
   }

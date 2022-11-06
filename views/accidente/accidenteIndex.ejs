@@ -5,7 +5,7 @@
     <thead> 
         <tr class ="bg-primary text-white"> 
             <th scope="col">ID</th> 
-            <th scope="col">ID Vehiculo</th> 
+            <th scope="col">Matricula del Vehiculo</th> 
             <th scope="col">Costo</th> 
             <th scope="col">Descripcion</th> 
             <th scope="col">Acciones</th> 
@@ -15,7 +15,12 @@
         <% accidentes.forEach( accidente => { %>
             <tr> 
                 <td><%= accidente.id_accidente %></td> 
-                <td><%= accidente.id_vehiculo %></td> 
+                <td><% vehiculos.forEach( vehiculo => { %>
+                        <% if(vehiculo.id_vehiculo === accidente.id_vehiculo) { %>
+                            <%= vehiculo.matricula %>
+                        <% } %>
+                    <% }) %>
+                </td> 
                 <td><%= accidente.costo_accidente %></td> 
                 <td><%= accidente.descripcion_accidente %></td> 
                 <td>

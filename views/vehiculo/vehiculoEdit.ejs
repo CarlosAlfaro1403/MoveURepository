@@ -1,0 +1,43 @@
+<%-include('../base/headerO')-%>
+<% if (vehiculo) { %>
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Editar Vehiculo</div>
+        <div class="card-body">       
+            <form action="/vehiculos/editar/<%= vehiculo.id_vehiculo %>" method="POST">
+                <label for="idTaxista" class="form-label">Taxista</label>
+                <select class="form-control" name="idTaxista" id="idTaxista" tabindex="1" disabled>
+                    <% taxistas.forEach( taxista => { %>
+                        <% if(taxista.id_taxista === vehiculo.id_taxista) { %>
+                            <option selected="true" value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                        <% } else { %>
+                            <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                        <% } %>
+                    <% }) %>
+                </select>
+                <div class="mb-3">
+                    <label for="names" class="form-label">Matricula</label>
+                    <input type="text" value="<%= vehiculo.matricula  %>" class="form-control" id="matricula" name="matricula" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Marca</label>
+                    <input type="text" value="<%= vehiculo.marca  %>" class="form-control" id="marca" name="marca" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Modelo</label>
+                    <input type="text" value="<%= vehiculo.modelo  %>" class="form-control" id="modelo" name="modelo" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="anio" class="form-label">Año</label>
+                    <input type="text" value="<%= vehiculo.anho  %>" class="form-control" id="anio" name="anio" tabindex="1" required>
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/vehiculos" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% } %>
+
+<%-include('../base/footer')-%>

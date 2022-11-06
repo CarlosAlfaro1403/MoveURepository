@@ -1,18 +1,25 @@
 <%-include('../base/headerO')-%>
 
 <% if (accidente) { %>
-    <div class="container mt-4">
         <div class="card border-secondary">
             <div class="card-header">Editar Accidente</div>
             <div class="card-body">
                 <form action="/accidentes/editar/<%= accidente.id_accidente %>" method="POST">
                     <div class="mb-3">
-                        <label for="vehiculo" class="form-label">ID del Accidente</label>
-                        <input type="number" value="<%= accidente.id_vehiculo  %>" class="form-control" id="vehiculo" name="vehiculo" tabindex="1">
+                        <label for="vehiculo" class="form-label">Matricula del Vehiculo</label>
+                        <select class="form-control" name="vehiculo" id="vehiculo" tabindex="1">
+                            <% vehiculos.forEach( vehiculo => { %>
+                                <% if(vehiculo.id_vehiculo === accidente.id_vehiculo) { %>
+                                    <option selected="true" value="<%= vehiculo.id_vehiculo %>"><%= vehiculo.matricula %></option>
+                                <% } else { %>
+                                    <option value="<%= vehiculo.id_vehiculo %>"><%= vehiculo.matricula %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="costo" class="form-label">Costo del Accidente</label>
-                        <input type="number" value="<%= accidente.costo_accidente  %>" class="form-control" id="costo" name="costo" tabindex="1">
+                        <input type="number" step="0.01" value="<%= accidente.costo_accidente  %>" class="form-control" id="costo" name="costo" tabindex="1">
                     </div>
                     <div class="mb-3">
                         <label for="descripcion" class="form-label">Descripcion</label>
@@ -23,7 +30,6 @@
                 </form>
             </div>
         </div>
-    </div>
 <% } %>
 
 <%-include('../base/footer')-%>

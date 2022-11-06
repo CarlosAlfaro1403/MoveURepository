@@ -10,24 +10,24 @@ exports.auth = async(req,res)=>{
     const { usuario, password } = req.body;
     const user = await Usuario.findOne({
         where: {
-            nombre_usuario: usuario, password: password
+            nombre_usuario: usuario
         }
     });   
     if(user){
-        req.app.locals = {user:req.body.usuario,userName:user.nombres};
+        req.app.locals = {user:req.body.usuario,userName:user.nombres,idSede:user.id_sede};
         req.session.user=req.body.usuario;
-        if(user.password == req.body.password){
+        if(user.password === req.body.password){
             if(user.id_tipo_usuario==1) //Admin
             {
-                res.redirect('dashboard');
+                res.redirect('usuarios');
             }
             else if(user.id_tipo_usuario==2) //Taxista
             {
-                res.redirect('dashboardT');
+                res.redirect('/viajes/notificaciones');
             }
             else if(user.id_tipo_usuario==3) //Operador
             {
-                res.redirect('dashboardO');
+                res.redirect('viajes');
             }
         }else{
             res.render('login',{message:'Contraseña no valida'});
