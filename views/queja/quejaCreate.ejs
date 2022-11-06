@@ -1,0 +1,35 @@
+<%-include('../base/header')-%>
+
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nueva Queja</div>
+        <div class="card-body">
+            <form action="/quejas" method="POST">
+                <div class="mb-3">
+                    <label for="idCliente" class="form-label">Id Cliente</label>
+                    <input type="text" class="form-control" id="idCliente" name="idCliente" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="idViaje" class="form-label">Id Viaje</label>
+                    <input type="text" class="form-control" id="idViaje" name="idViaje" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="idTaxista" class="form-label">Id Taxista</label>
+                    <input type="text" class="form-control" id="idTaxista" name="idTaxista" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="nombreQueja" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombreQueja" name="nombreQueja" tabindex="1">
+                </div>
+                <div class="mb-3">
+                    <label for="descripcionQueja" class="form-label">Descripción</label>
+                    <input type="text" class="form-control" id="descripcionQueja" name="descripcionQueja" tabindex="1">
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/quejas" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>
