@@ -5,6 +5,7 @@
     <thead> 
         <tr class ="bg-primary text-white"> 
             <th scope="col">Id</th> 
+            <th scope="col">Taxista</th> 
             <th scope="col">Matricula</th> 
             <th scope="col">Marca</th>
             <th scope="col">Modelo</th> 
@@ -16,6 +17,12 @@
         <% vehiculos.forEach( vehiculo => { %>
             <tr> 
                 <td><%= vehiculo.id_vehiculo %></td> 
+                <td><% taxistas.forEach( taxista => { %>
+                        <% if(taxista.id_taxista === vehiculo.id_taxista) { %>
+                            <%= taxista.nombre_taxista %>
+                        <% } %>
+                    <% }) %>
+                </td>
                 <td><%= vehiculo.matricula %></td>
                 <td><%= vehiculo.marca %></td> 
                 <td><%= vehiculo.modelo %></td> 

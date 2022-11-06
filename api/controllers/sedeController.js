@@ -1,4 +1,4 @@
-const {SedeCooperativa} = require('../../database/models/index')
+const {SedeCooperativa,Usuario} = require('../../database/models/index')
 
 class SedeController {
 
@@ -63,14 +63,28 @@ class SedeController {
     }
 
     static async delete (req, res) {
-        console.log(req.params);
-
-        const sede = await SedeCooperativa.destroy({
-            where: {
-                id_sede: req.params.id
-            }
+        const usuarios = await Usuario.findAll({
+            where:{id_sede:req.params.id}
         });
-        res.redirect('/sedes');
+
+        if(usuarios){
+            const Sedes = await SedeCooperativa.findAll({
+                attributes:['id_sede','id_cooperativa', 'nombre_sede','direccion_sede']
+            }); 
+            res.render('./sede/sedeIndex',{message:'No se puede eliminar, la sede esta asociada a un usuario',
+                sedes: Sedes    
+            });
+        }
+        else{
+            console.log(req.params);
+
+            const sede = await SedeCooperativa.destroy({
+                where: {
+                    id_sede: req.params.id
+                }
+            });
+            res.redirect('/sedes');
+            }      
     }
 }
 module.exports = SedeController

@@ -1,4 +1,4 @@
-const {Vehiculo,} = require('../../database/models/index')
+const {Vehiculo, Taxista,} = require('../../database/models/index')
 
 // exports.user = (req, res) => {
 //     res.render('usuarioCreate');
@@ -7,25 +7,38 @@ const {Vehiculo,} = require('../../database/models/index')
 class UsuarioController {
 
     // redireccionar a la vista de crear usuario
-    static create (req, res) {
-        res.render('vehiculo/vehiculoCreate');
+    static async create (req, res) {
+        const taxistas = await Taxista.findAll({
+            where:{id_sede: req.app.locals.idSede,posee_auto:false}
+        });
+        res.render('vehiculo/vehiculoCreate',{
+            taxistas: taxistas
+        });
     }
 
     static async edit (req, res) {
+        const taxistas = await Taxista.findAll({
+            where:{id_sede: req.app.locals.idSede}
+        });
         const vehiculo = await Vehiculo.findByPk(req.params.id);
         console.log(vehiculo);
         res.render('vehiculo/vehiculoEdit', {
-            vehiculo : vehiculo.dataValues
+            vehiculo : vehiculo.dataValues,
+            taxistas : taxistas
         });
     }
 
     // metodos de la clase
     static async showAll (req, res) {
+        const taxistas = await Taxista.findAll({
+            where:{id_sede: req.app.locals.idSede}
+        });
         const vehiculos = await Vehiculo.findAll({
             where:{ id_sede: req.app.locals.idSede}
         });
         res.render('vehiculo/vehiculoIndex', {
-            vehiculos : vehiculos
+            vehiculos : vehiculos,
+            taxistas : taxistas
         });
     }
 
@@ -37,12 +50,13 @@ class UsuarioController {
     }
 
     static async store (req, res) {
-        const { marca,modelo, matricula,anio } = req.body;
+        const { idTaxista,marca,modelo, matricula,anio } = req.body;
         if(!marca || !modelo || !matricula || !anio) {
             res.render('vehiculo/vehiculoEdit',{message:'Contraseña no valida'});
         }else {
             console.log(req.body);
             const vehiculo = await Vehiculo.create({
+                id_taxista: idTaxista,
                 matricula: matricula,
                 marca: marca,
                 modelo: modelo,
@@ -53,12 +67,32 @@ class UsuarioController {
         }
     }
 
+    static async storeT (req, res) {
+        const { id_taxista,marca,modelo, matricula,anio } = req.body;
+        console.log(req.body);
+        if(!marca || !modelo || !matricula || !anio) {
+            //res.render('vehiculo/vehiculoEdit',{message:'Contraseña no valida'});
+        }else {
+            console.log(req.body);
+            const vehiculo = await Vehiculo.create({
+                id_taxista: id_taxista,
+                matricula: matricula,
+                marca: marca,
+                modelo: modelo,
+                anho: anio,
+                id_sede: req.app.locals.idSede
+            })
+            res.redirect('/taxistas');
+        }
+    }
+
     static async update (req, res) {
-        const { marca,modelo, matricula,anio } = req.body;
+        const { idTaxista,marca,modelo, matricula,anio } = req.body;
         if(!marca || !modelo || !matricula || !anio) {
             console.log('Campos incompletos');
         }else {
             const vehiculo = await Vehiculo.update({
+                id_taxista: idTaxista,
                 matricula: matricula,
                 marca: marca,
                 modelo: modelo,

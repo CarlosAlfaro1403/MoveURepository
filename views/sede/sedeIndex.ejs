@@ -27,6 +27,11 @@
     </tbody> 
    
     <a href="sedes/crear" class="btn btn-outline-primary mt-4" >Crear nueva Sede</a>
+    <div class="card-footer text-center py-3">
+        <% if(locals.message){ %>
+            <div class="alert alert-danger" role="alert" ><%=message %></div>
+        <% } %>
+    </div>
 </table>
 
 

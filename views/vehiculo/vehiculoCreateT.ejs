@@ -1,20 +1,21 @@
 <%-include('../base/headerO')-%>
+<div class="container mt-4">
     <div class="card border-secondary">
-        <div class="card-header">Nuevo Vehiculo</div>
+        <div class="card-header">Ingresar Vehiculo de <%= newTaxista.nombre_taxista%></div>
         <div class="card-body">
-            <div class="card-footer text-center py-3">
-                <% if(locals.message){ %>
-                    <div class="alert alert-danger" role="alert" ><%=message %></div>
-                <% } %>
-            </div>
-            <form action="/vehiculos" method="POST">
+            <form action="/vehiculos/vehiculoT" method="POST">
                 <div class="mb-3">
                     <label for="idTaxista" class="form-label">Id Taxista</label>
-                    <select class="form-control" name="idTaxista" id="idTaxista" tabindex="1">
+                    <select class="form-control" name="idTaxista" id="idTaxista" tabindex="1" disabled>
                         <% taxistas.forEach( taxista => { %>
-                            <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                            <% if(taxista.id_taxista === newTaxista.id_taxista) { %>
+                                <option selected="true" value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                            <% } else { %>
+                                <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
+                            <% } %>
                         <% }) %>
                     </select>
+                    <input type="hidden" name="id_taxista" id="id_taxista" value="<%= newTaxista.id_taxista %>">
                 </div>
                 <div class="mb-3">
                     <label for="names" class="form-label">Matricula</label>
@@ -37,5 +38,6 @@
             </form>
         </div>
     </div>
+</div>
 
 <%-include('../base/footer')-%>
