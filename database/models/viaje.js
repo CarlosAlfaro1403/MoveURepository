@@ -56,11 +56,23 @@ Viaje.init({
     allowNull: true
   },
   estado_viaje: {
-    type: DataTypes.CHAR(10),
+    type: DataTypes.STRING(10),
     allowNull: true
   },
   destino_viaje: {
-    type: DataTypes.CHAR(256),
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
+  cliente_ubicacion: {
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
+  destino_coordenadas: {
+    type: DataTypes.STRING(256),
+    allowNull: true
+  },
+  cliente_coordenadas: {
+    type: DataTypes.STRING(256),
     allowNull: true
   },
 }, {

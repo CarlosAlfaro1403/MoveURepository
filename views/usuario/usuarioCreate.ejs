@@ -1,21 +1,47 @@
 <%-include('../base/header')-%>
-
 <div class="container mt-4">
     <div class="card border-secondary">
         <div class="card-header">Nuevo Usuario</div>
         <div class="card-body">
             <form action="/usuarios" method="POST">
                 <div class="mb-3">
-                    <label for="userName" class="form-label">Nombre de Usuario</label>
-                    <input type="text" class="form-control" id="userName" name="userName" tabindex="1">
+                    <label for="names" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="names" name="names" tabindex="1" required>
                 </div>
                 <div class="mb-3">
-                    <label for="lastName" class="form-label">Apellido de Usuario</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" tabindex="1">
+                    <label for="lastName" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Sede</label>
+                    <select class="form-control" name="id_sede" id="id_sede" tabindex="1">
+                        <% sedes.forEach( sede => { %>
+                            <option value="<%= sede.id_sede %>"><%= sede.nombre_sede %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Tipo de Usuario</label>
+                    <select class="form-control" name="id_tipo_usuario" id="id_tipo_usuario" tabindex="1">
+                        <% tipoUsuarios.forEach( tipoUsuario => { %>
+                            <option value="<%= tipoUsuario.id_tipo_usuario %>"><%= tipoUsuario.nombre_tipo_usuario %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="userName" class="form-label">Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="userName" name="userName" tabindex="1" required>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Contraseña</label>
-                    <input type="text" class="form-control" id="password" name="password" tabindex="1">
+                    <input type="password" class="form-control" id="password" name="password" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Estado</label>
+                    <select class="form-control" name="estado" id="estado" tabindex="1">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
                 <a href="/usuarios" class="btn btn-secondary">Cancelar</a>

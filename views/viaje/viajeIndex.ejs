@@ -1,0 +1,31 @@
+<%-include('../base/headerO')-%>
+<div data-aos="zoom-in" class="container mt-4">
+<h2>Panel de Viajes</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Destino viaje</th>
+            <th scope="col">Estado</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody>
+        <% viajes.forEach( viaje => { %>
+            <tr> 
+                <td><%= viaje.id_viaje %></td> 
+                <td><%= viaje.cliente_ubicacion %></td>
+                <td><%= viaje.estado_viaje %></td>
+                
+                <td>
+                    <a href="viajes/ver/<%= viaje.id_viaje %>" class="btn btn-outline-info">Ver</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="/viajes/crear" class="btn btn-outline-primary mt-4" >Asignar nuevo Viaje</a>
+</table>
+</div>
+
+
+<%-include('../base/footer')-%>

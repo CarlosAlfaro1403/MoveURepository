@@ -7,9 +7,35 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>MoveU</title>
-        <link href="css/styles.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&family=Raleway:wght@100;400&display=swap" rel="stylesheet">
+
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+        <link href="/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css" integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14=" crossorigin=""/>
+        <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js" integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg=" crossorigin=""></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
         <link href="/css/bootstrap.min.css" rel="stylesheet" />
+        <style>
+            * {
+                font-family: 'Fira Sans', sans-serif;
+            }
+            .container {
+                margin: 4%;
+            }
+            .leaflet-container {
+                height: 400px;
+                width: 600px;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        </style>
     </head>
     <body>
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -23,7 +49,7 @@
             </form>
             <!-- Navbar-->
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-                <li class="nav-item dropdown"><h3 class="navbar-brand ps-3"><%= locals.usuarioLogin?usuarioLogin:"Usuario"%></h3></li>
+                <li class="nav-item dropdown"><h3 class="navbar-brand ps-3"><%= locals.userName?userName:"Administrador"%></h3></li>
                 <li class="nav-item dropdown">         
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -39,31 +65,15 @@
                         <div class="nav">
                             <div class="sb-sidenav-menu-heading">General</div>
                             <a class="nav-link" href="/usuarios">Gestión de Usuario</a>
-                            <div class="sb-sidenav-menu-heading">Viajes</div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                <div class="sb-nav-link-icon"></div>Menu 2<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Menu 2.1</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Menu 2.2</a>
-                                </nav>
-                            </div>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                                <div class="sb-nav-link-icon"></div>Menu 3<div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                            </a>
-                            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                    <a class="nav-link collapsed" href="#">Menu 3.1</a>
-                                    <a class="nav-link collapsed" href="#">Menu 3.2</a>
-                                </nav>
-                            </div>
+                            <a class="nav-link" href="/tipoUsuarios">Gestión de Tipo de Usuario</a>
                             <div class="sb-sidenav-menu-heading">Sistema</div>
-                            <a class="nav-link" href="charts.html"><div class="sb-nav-link-icon"></div>Menu 4</a>
-                            <a class="nav-link" href="tables.html"><div class="sb-nav-link-icon"></div>Menu 5</a>
+                            <a class="nav-link" href="/sedes">Gestión de Sedes</a>
                         </div>
                     </div>
                 </nav>
             </div>
+            <script>
+                AOS.init();
+            </script>
             <div id="layoutSidenav_content">
                 <main>

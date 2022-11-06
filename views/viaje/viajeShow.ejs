@@ -1,0 +1,101 @@
+<%-include('../base/headerO')-%>
+
+<% if (viaje) { %>
+    <div data-aos="zoom-in" class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header">Ver Viaje</div>
+            <div class="card-body">
+                
+                <div class="row ">
+
+                    <div class="col-md-6">
+                        <h3>Detalle de viaje</h3>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">ID de Viaje</th>
+                                <th scope="col"><%= viaje.id_viaje %></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">Coordenadas</th>
+                                <td id="destino"><%= viaje.cliente_coordenadas  %></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Colonia</th>
+                                <td id="destino_1"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Distrito</th>
+                                <td id="destino_2"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Ciudad</th>
+                                <td id="destino_3"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Municipio</th>
+                                <td id="destino_4"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Departamento</th>
+                                <td id="destino_5"></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Nombre Taxista</th>
+                                <td><%= taxista.nombre_taxista  %> <%= taxista.apellido_taxista  %></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">DUI Taxista</th>
+                                <td><%= taxista.dui_taxista  %></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                
+                    <div class="col-md-6">
+                        <h3>Monitorizacion</h3>
+                        <div id="map" style="width: 550px; height: 400px;"></div>
+                    </div>
+                
+                  </div>
+                
+                
+                
+            </div>
+            <script>
+
+                var direccionArr = $( "#destino" ).text().split(',');
+
+                const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
+        
+                const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                }).addTo(map);
+            
+                const marker = L.marker([51.5, -0.09]).addTo(map);
+
+                    console.log($( "#destino" ).text());
+                    marker.setLatLng([direccionArr[0], direccionArr[1]]).update(); 
+                    console.log( "ready!" );
+                    str_direccion = "https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+direccionArr[0]+"&lon="+direccionArr[1];
+                    console.log(str_direccion)
+                    $.get(str_direccion, function(data){
+                        $( "#destino_1" ).text(data.address.neighbourhood);
+                        $( "#destino_2" ).text(data.address.city_district);
+                        $( "#destino_3" ).text(data.address.city);
+                        $( "#destino_4" ).text(data.address.county);
+                        $( "#destino_5" ).text(data.address.state);
+                    });
+                
+                
+                
+            
+            </script>
+        </div>
+    </div>
+<% } %>
+
+<%-include('../base/footer')-%>

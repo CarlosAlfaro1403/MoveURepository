@@ -1,0 +1,45 @@
+<%-include('../base/headerO')-%>
+
+<h2>Bienvenido a la administración del Taxistas</h2>
+<table class="table table-bordered table-striped text-center mt-4"> 
+    <thead> 
+        <tr class ="bg-primary text-white"> 
+            <th scope="col">Id</th> 
+            <th scope="col">Nombres</th> 
+            <th scope="col">Apellidos</th>
+            <th scope="col">Sede</th>
+            <th scope="col">Dui</th> 
+            <th scope="col">Núm. Circulación</th> 
+            <th scope="col">Edad</th> 
+            <th scope="col">Teléfono</th> 
+            <th scope="col">Acciones</th> 
+        </tr> 
+    </thead> 
+    <tbody> 
+        <% taxistas.forEach( taxista => { %>
+            <tr> 
+                <td><%= taxista.id_taxista %></td> 
+                <td><%= taxista.nombre_taxista %></td> 
+                <td><%= taxista.apellido_taxista %></td> 
+                <td><% sedes.forEach( sede => { %>
+                        <% if(sede.id_sede === taxista.id_sede) { %>
+                            <%= sede.nombre_sede %>
+                        <% } %>
+                    <% }) %>
+                </td> 
+                <td><%= taxista.dui_taxista %></td> 
+                <td><%= taxista.num_circulacion %></td> 
+                <td><%= taxista.edad_taxista %></td> 
+                <td><%= taxista.telefono_taxista %></td> 
+                <td>
+                    <a href="taxistas/edit/<%= taxista.id_taxista %>" class="btn btn-outline-info">Editar</a>
+                    <a href="taxistas/eliminar/<%= taxista.id_taxista %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr> 
+        <% }) %>
+    </tbody> 
+    <a href="taxistas/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Taxista</a>
+</table>
+
+
+<%-include('../base/footer')-%>

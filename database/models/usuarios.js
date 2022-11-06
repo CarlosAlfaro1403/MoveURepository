@@ -43,7 +43,7 @@ Usuario.init({
     type: DataTypes.STRING(128),
     allowNull: false
   },
-  apellido_usuario: {
+  apellidos: {
     type: DataTypes.STRING(128),
     allowNull: false
   },
@@ -54,6 +54,10 @@ Usuario.init({
   estado_usuario: {
     type: DataTypes.STRING(16),
     allowNull: true
+  },
+  nombres: {
+    type: DataTypes.STRING(128),
+    allowNull: false
   }
 }, {
   sequelize: connection.connect(),

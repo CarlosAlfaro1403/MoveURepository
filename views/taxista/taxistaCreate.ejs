@@ -1,0 +1,50 @@
+<%-include('../base/headerO')-%>
+<div class="container mt-4">
+    <div class="card border-secondary">
+        <div class="card-header">Nuevo Taxista</div>
+        <div class="card-body">
+            <form action="/taxistas" method="POST">
+                <div class="mb-3">
+                    <label for="taxistaNombre" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" id="taxistaNombre" name="taxistaNombre" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaApellido" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" id="taxistaApellido" name="taxistaApellido" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_sede" class="form-label">Sede</label>
+                    <select class="form-control" name="taxistaIdSede" id="taxistaIdSede" tabindex="1">
+                        <% sedes.forEach( sede => { %>
+                            <option value="<%= sede.id_sede %>"><%= sede.nombre_sede %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaDui" class="form-label">Dui</label>
+                    <input type="text" maxlength="9" class="form-control" id="taxistaDui" name="taxistaDui" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaNumCirculacion" class="form-label">Número de Circulación</label>
+                    <input type="text" maxlength="18" class="form-control" id="taxistaNumCirculacion" name="taxistaNumCirculacion" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaDui" class="form-label">Edad</label>
+                    <input type="number" maxlength="2" class="form-control" id="taxistaEdad" name="taxistaEdad" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaTelefono" class="form-label">Telefono</label>
+                    <input type="text" maxlength="9" class="form-control" id="taxistaTelefono" name="taxistaTelefono" tabindex="1" required>
+                </div>
+                <div class="mb-3">
+                    <label for="taxistaPoseeAuto" class="form-label">
+                        <input type="checkbox" id="taxistaPoseeAuto" name="taxistaPoseeAuto" checked="value">Posee Auto</label>
+                </div>
+                <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                <a href="/taxistas" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>
