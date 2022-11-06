@@ -1,26 +1,38 @@
-const {Accidente} = require('../../database/models/index')
+const {Accidente,Vehiculo} = require('../../database/models/index')
 class AccidenteController {
 
     // redireccionar a la vista de crear accidente
-    static create (req, res) {
-        res.render('accidente/accidenteCreate');
+    static async create (req, res) {
+        const vehiculos = await Vehiculo.findAll({
+            where:{ id_sede: req.app.locals.idSede}
+        });
+        res.render('accidente/accidenteCreate',{
+            vehiculos: vehiculos
+        });
     }
 
     static async edit (req, res) {
+        const vehiculos = await Vehiculo.findAll({
+            where:{ id_sede: req.app.locals.idSede}
+        });
         const accidente = await Accidente.findByPk(req.params.id);
-        console.log(accidente);
         res.render('accidente/accidenteEdit', {
-            accidente : accidente.dataValues
+            accidente : accidente.dataValues,
+            vehiculos: vehiculos
         });
     }
 
     // metodos de la clase
     static async showAll (req, res) {
+        const vehiculos = await Vehiculo.findAll({
+            where:{ id_sede: req.app.locals.idSede}
+        });
         const Accidentes = await Accidente.findAll({
-            attributes: ['id_accidente', 'id_vehiculo', 'costo_accidente', 'descripcion_accidente']
+            where:{ id_sede: req.app.locals.idSede}
         });
         res.render('accidente/accidenteIndex', {
-            accidentes : Accidentes
+            accidentes : Accidentes,
+            vehiculos: vehiculos
         });
     }
 
@@ -40,7 +52,8 @@ class AccidenteController {
             const accidente = await Accidente.create({
                 id_vehiculo: vehiculo,
                 costo_accidente: costo,
-                descripcion_accidente: descripcion
+                descripcion_accidente: descripcion,
+                id_sede: req.app.locals.idSede
             })
             res.redirect('/accidentes');
         }
@@ -54,7 +67,8 @@ class AccidenteController {
             const accidente = await Accidente.update({
                 id_vehiculo: vehiculo,
                 costo_accidente: costo,
-                descripcion_accidente: descripcion
+                descripcion_accidente: descripcion,
+                id_sede: req.app.locals.idSede
             }, {
                 where: {
                     id_accidente: req.params.id

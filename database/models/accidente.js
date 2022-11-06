@@ -38,6 +38,14 @@ Accidente.init({
   descripcion_accidente: {
     type: DataTypes.CHAR(256),
     allowNull: true
+  },
+  id_sede: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    references: {
+      model: 'sede_cooperativa',
+      key: 'id_sede'
+    }
   }
 }, {
   sequelize: connection.connect(),
