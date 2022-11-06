@@ -7,6 +7,7 @@ const Taxista = require('./taxista');
 const Accidente = require('./accidente');
 const Cliente = require('./cliente');
 const Vehiculo = require('./vehiculo');
+const Cooperativa = require('./cooperativa');
 
 module.exports = {
     Usuario,
@@ -17,5 +18,6 @@ module.exports = {
     Taxista,
     Accidente,
     Cliente,
-    Vehiculo
+    Vehiculo,
+    Cooperativa
   }

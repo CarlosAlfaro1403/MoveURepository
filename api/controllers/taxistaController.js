@@ -37,9 +37,8 @@ class TaxistaController {
         const taxistas = await Taxista.findAll({
              where:{id_sede: user.id_sede}
         }); 
-        console.log(taxistas);
         const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
+            where:{id_sede: user.id_sede}
         });
         res.render('taxista/taxistaIndex', {
             taxistas : taxistas,
@@ -59,32 +58,58 @@ class TaxistaController {
         var poseeAuto;
         if(req.body.taxistaPoseeAuto){
             poseeAuto = 'True';
+
+            if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
+                console.log('Campos incompletos');
+            }else {
+                console.log(req.body);
+                const newTaxista = await Taxista.create({
+                    id_sede: taxistaIdSede,
+                    nombre_taxista: taxistaNombre,
+                    apellido_taxista: taxistaApellido,
+                    dui_taxista: taxistaDui,
+                    num_circulacion: taxistaNumCirculacion,
+                    edad_taxista: taxistaEdad,
+                    telefono_taxista: taxistaTelefono,
+                    posee_auto: poseeAuto
+                });
+
+                const taxistas = await Taxista.findAll({
+                    where:{id_sede: taxistaIdSede}
+                });
+                res.render('vehiculo/vehiculoCreateT',{
+                    newTaxista: newTaxista,
+                    taxistas: taxistas
+                }); 
+            }
         }
         else{
             poseeAuto = 'False';
-        }
 
-        if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
-            console.log('Campos incompletos');
-        }else {
-            console.log(req.body);
-            const sede = await Taxista.create({
-                id_sede: taxistaIdSede,
-                nombre_taxista: taxistaNombre,
-                apellido_taxista: taxistaApellido,
-                dui_taxista: taxistaDui,
-                num_circulacion: taxistaNumCirculacion,
-                edad_taxista: taxistaEdad,
-                telefono_taxista: taxistaTelefono,
-                posee_auto: poseeAuto
-            })
-            res.redirect('/taxistas');
+            if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
+                console.log('Campos incompletos');
+            }else {
+                console.log(req.body);
+                const sede = await Taxista.create({
+                    id_sede: taxistaIdSede,
+                    nombre_taxista: taxistaNombre,
+                    apellido_taxista: taxistaApellido,
+                    dui_taxista: taxistaDui,
+                    num_circulacion: taxistaNumCirculacion,
+                    edad_taxista: taxistaEdad,
+                    telefono_taxista: taxistaTelefono,
+                    posee_auto: poseeAuto
+                })
+                res.redirect('/taxistas');
+            }
         }
     }
 
     static async update (req, res) {
-        const {taxistaNombre, taxistaIdSede, taxistaApellido,taxistaDui,taxistaNumCirculacion,taxistaEdad,taxistaTelefono,taxistaPoseeAuto } = req.body;
-        console.log(req.body.taxistaPoseeAuto);
+        const taxista = await Taxista.findOne({
+            where:{id_taxista:req.params.id}
+        })
+        const {taxistaNombre, taxistaApellido,taxistaDui,taxistaNumCirculacion,taxistaEdad,taxistaTelefono,taxistaPoseeAuto } = req.body;
         var poseeAuto='false';
         if(req.body.taxistaPoseeAuto){
             poseeAuto = 'True';
@@ -92,18 +117,18 @@ class TaxistaController {
         else{
             poseeAuto = 'False';
         }
-        if(!taxistaNombre || !taxistaIdSede || !taxistaApellido) {
+        if(!taxistaNombre ||  !taxistaApellido) {
             console.log('Campos incompletos');
         }else {
             const sede = await Taxista.update({
-                id_sede: taxistaIdSede,
+                id_sede: taxista.id_sede,
                 nombre_taxista: taxistaNombre,
                 apellido_taxista: taxistaApellido,
                 dui_taxista: taxistaDui,
                 num_circulacion: taxistaNumCirculacion,
                 edad_taxista: taxistaEdad,
                 telefono_taxista: taxistaTelefono,
-                posee_auto: poseeAuto
+                posee_auto: taxista.posee_auto
             }, {
                 where: {
                     id_taxista: req.params.id
@@ -114,18 +139,6 @@ class TaxistaController {
     }
 
     static async delete (req, res) {
-        const vehiculo = await Vehiculo.findAll({
-            where:{id_taxista:req.params.id}
-        });
-        const viaje = await Viaje.findAll({
-            where:{id_taxista:req.params.id}
-        });
-
-        if(vehiculo || viaje){
-            //alert('No se puede eliminar, el taxista esat asociado a un vehiculo o un viaje');
-            console.log('No se puede eliminar, el taxista esat asociado a un vehiculo o un viaje')
-        }
-        else{
             console.log(req.params);
 
             const sede = await Taxista.destroy({
@@ -134,7 +147,6 @@ class TaxistaController {
                 }
             });
             res.redirect('/taxistas');
-        }
     }
 }
 module.exports = TaxistaController

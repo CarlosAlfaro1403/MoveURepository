@@ -1,0 +1,36 @@
+<%-include('../base/header')-%>
+
+<h2>Bienvenido a la administración de Quejas</h2>
+<table class="table table-bordered table-striped text-center mt-4">
+    <thead>
+        <tr class="bg-primary text-white">
+            <th scope="col">Id Cooperativa</th>
+            <th scope="col">Cooperativa</th>
+            <th scope="col">num Cooperativa</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Dirreción</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% cooperativas.forEach( cooperativa => { %>
+            <tr>
+                <td><%= cooperativa.id_cooperativa %></td>
+                <td><%= cooperativa.nombre_cooperativa %></td>
+                <td><%= cooperativa.num_identificacion %></td>
+                <td><%= cooperativa.correo_cooperativa %></td>
+                <td><%= cooperativa.direccion_cooperativa %></td>
+                <td><%= cooperativa.telefono_cooperativa %></td>
+                <td>
+                    <a href="cooperativas/edit/<%= cooperativa.id_cooperativa %>" class="btn btn-outline-info">Editar</a>
+                    <a href="cooperativas/eliminar/<%= cooperativa.id_cooperativa %>" class="btn btn-outline-danger">Eliminar</a>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+    <a href="cooperativas/crear" class="btn btn-outline-primary mt-4" >Crear nueva cooperativa</a>
+</table>
+
+<%-include('../base/footer')-%>

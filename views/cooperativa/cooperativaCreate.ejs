@@ -1,0 +1,32 @@
+<%-include('../base/header')-%>
+
+<div class="card border-secondary">
+    <div class="card-header">Nueva cooperativa</div>
+    <div class="card-body">
+        <form action="/cooperativas" method="POST">
+            <div class="mb-3">
+                <label for="nomCooperativa" class="form-label">Cooperativa</label>
+                <input type="text" class="form-control" id="nomCooperativa" name="nomCooperativa" tabindex="1">
+            </div>
+            <div class="mb-3">
+                <label for="numCooperativa" class="form-label">Número de Identificación</label>
+                <input type="text" class="form-control" id="numCooperativa" name="numCooperativa" tabindex="1">
+            </div>
+            <div class="mb-3">
+                <label for="correoCooperativa" class="form-label">Correo</label>
+                <input type="mail" class="form-control" id="correoCooperativa" name="correoCooperativa" tabindex="1">
+            </div>
+            <div class="mb-3">
+                <label for="dirreccionCooperativa" class="form-label">Dirección</label>
+                <input type="text" class="form-control" id="dirreccionCooperativa" name="dirreccionCooperativa" tabindex="1">
+            <div class="mb-3">
+                <label for="telCooperativa" class="form-label">Teléfono</label>
+                <input type="text" class="form-control" id="telCooperativa" name="telCooperativa" tabindex="1">
+            </div>
+            <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+            <a href="/cooperativas" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+<%-include('../base/footer')-%>

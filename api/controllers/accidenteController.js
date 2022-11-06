@@ -45,7 +45,7 @@ class AccidenteController {
 
     static async store (req, res) {
         const { vehiculo, costo, descripcion } = req.body;
-        if(!vehiculo || !costo || !descripcion) {
+        if(!vehiculo || !costo) {
             console.log('Campos incompletos');
         }else {
             console.log(req.body);
