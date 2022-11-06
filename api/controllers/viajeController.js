@@ -46,11 +46,37 @@ class ViajeController {
 
     static async showAllNotificacion (req, res) {
         const Viajes = await Viaje.findAll({
-            attributes: ['id_viaje', 'estado_viaje', 'cliente_ubicacion']
-        });
+            where: {
+              estado_viaje: 'Pendiente'
+            }
+          });
         res.render('viaje/viajeNotificacionIndex', {
             viajes : Viajes
         });
+    }
+
+    static async updateNotificacion (req, res) {
+        const { destino_coordenadas, estado_viaje } = req.body;
+        if (!destino_coordenadas){
+            req.body.destino_coordenadas = '';
+        }
+        if(!estado_viaje) {
+            // res.render('usuario/usuarioCreate', {
+            //     error: 'Campos incompletos'
+            // });
+            console.log('Campos incompletos');
+        }else {
+            const viaje = await Viaje.update({
+                estado_viaje: estado_viaje,
+                destino_coordenadas: destino_coordenadas
+            }, {
+                where: {
+                    id_viaje: req.params.id
+                }
+            });
+            res.redirect('/viajes');
+            console.log('Viaje actualizado');
+        }
     }
     
     static async store (req, res) {
