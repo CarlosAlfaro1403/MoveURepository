@@ -1,0 +1,38 @@
+%-include('../base/header')-%>
+
+<% if (queja) { %>
+    <div class="container mt-4">
+        <div class="card border-secondary">
+            <div class="card-header">Editar cooperativa</div>
+            <div class="card-body">
+                <form action="/cooperativa/editar/<%= cooperativa.id_cooperativa %>" method="POST">
+                    <div class="mb-3">
+                        <label for="nomCooperativa" class="form-label">Id Cooperativa</label>
+                        <input type="text" value="<%= cooperaiva.nom_cooperativa  %>" class="form-control" id="nomCooperativa" name="nomCooperativa" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="numCooperativa" class="form-label">Id Cooperativa</label>
+                        <input type="text" value="<%= cooperativa.num_cooperativa  %>" class="form-control" id="numCooperativa" name="numCooperativa" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="correoCooperativa" class="form-label">cooperativa</label>
+                        <input type="text" value="<%= queja.correo_cooperativa  %>" class="form-control" id="nombreQueja" name="correoCooperativa" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="dirreccionCooperativa"class="form-label">cooperativa</label>
+  direccion_cooperativa: {
+                        <input type="text" value="<%= cooperativa.dirrecion_cooperativa %>" class="form-control" id="dirreccionCooperativa" name="dirrecionCooperativa" tabindex="1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="telCooperativa"class="form-label">cooperativa</label>
+                        <input type="text" value="<%= cooperativa.telefono_cooperativa  %>" class="form-control" id="telCooperativa" name="telCooperativa" tabindex="1">
+                    </div>
+                    <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
+                    <a href="/cooperativa" class="btn btn-secondary">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+<% } %>
+
+<%-include('../base/footer')-%>
