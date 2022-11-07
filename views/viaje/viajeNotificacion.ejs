@@ -98,6 +98,8 @@
 
           var direccionArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.cliente_coordenadas) %>"));
           var destinoArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.destino_coordenadas) %>"));
+          console.log(destinoArr)
+          console.log(direccionArr)
           var idViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.id_viaje) %>"));
           var estadoViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.estado_viaje) %>"));
           direccionArr = direccionArr.split(',');
@@ -122,6 +124,7 @@
           }
           var destino_a_fixed = parseFloat(direccionArr[0]).toFixed(3) + "," + parseFloat(direccionArr[1]).toFixed(3);
           var destino_a = parseFloat(direccionArr[0]) + "," + parseFloat(direccionArr[1]);
+          var costo = 0.0;
           $("#destino").text(destino_a_fixed);
 
           const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
@@ -146,13 +149,13 @@
             var tiempo_total = Math.round((route.summary.totalTime / 60))
             destino_a = route.inputWaypoints[1].latLng.lat.toFixed(3) + "," + route.inputWaypoints[1].latLng.lng.toFixed(3)
             if (distancia_total > 20000) {
-              var costo = 10.20 + 0.2 * tiempo_total + 0.6 * distancia_total / 1000
+              costo = (10.20 + 0.2 * tiempo_total + 0.6 * distancia_total / 1000).toFixed(2)
             } else {
-              var costo = 1.50 + 0.2 * tiempo_total + 0.5 * distancia_total / 1000
+              costo = (1.50 + 0.2 * tiempo_total + 0.5 * distancia_total / 1000).toFixed(2)
             }
             $("#destino_servicio_2").text(distancia_total + " metros");
             $("#destino_servicio_3").text(tiempo_total + " minutos");
-            $("#destino_servicio_4").text("$ " + costo.toFixed(2));
+            $("#destino_servicio_4").text("$ " + costo);
             $("#destino_servicio_1").text(destino_a);
           })
             .addTo(map);
@@ -169,7 +172,7 @@
           });
 
           $( "#iniciar_boton" ).click(function() {
-            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Confirmado', destino_coordenadas: destino_a})
+            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Confirmado', destino_coordenadas: destino_a, costo: costo})
             .done(function (data) {
               alert("Viaje iniciado");
             })

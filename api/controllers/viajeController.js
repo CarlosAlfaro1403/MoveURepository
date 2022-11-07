@@ -71,7 +71,7 @@ class ViajeController {
     }
 
     static async updateNotificacion (req, res) {
-        const { destino_coordenadas, estado_viaje } = req.body;
+        const { destino_coordenadas, estado_viaje, costo } = req.body;
         if (!destino_coordenadas){
             req.body.destino_coordenadas = '';
         }
@@ -83,7 +83,8 @@ class ViajeController {
         }else {
             const viaje = await Viaje.update({
                 estado_viaje: estado_viaje,
-                destino_coordenadas: destino_coordenadas
+                destino_coordenadas: destino_coordenadas,
+                costo: costo
             }, {
                 where: {
                     id_viaje: req.params.id
