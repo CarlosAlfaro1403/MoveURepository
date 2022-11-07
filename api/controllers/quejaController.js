@@ -8,61 +8,76 @@ class QuejaController {
 
     // redireccionar a la vista de crear usuario
     static async create (req, res) {
-        const clientes = await Cliente.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const taxistas = await Taxista.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const viajes = await Viaje.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        res.render('queja/quejaCreate',{
-            clientes: clientes,
-            taxistas: taxistas,
-            viajes: viajes
-        });
+        if(req.app.locals.isOperador === 1){
+            const clientes = await Cliente.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const taxistas = await Taxista.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const viajes = await Viaje.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            res.render('queja/quejaCreate',{
+                clientes: clientes,
+                taxistas: taxistas,
+                viajes: viajes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const clientes = await Cliente.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const taxistas = await Taxista.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const viajes = await Viaje.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const queja = await Queja.findByPk(req.params.id);
-        res.render('queja/quejaEdit', {
-            queja : queja.dataValues,
-            clientes: clientes,
-            taxistas: taxistas,
-            viajes: viajes
-        });
+        if(req.app.locals.isOperador === 1){
+            const clientes = await Cliente.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const taxistas = await Taxista.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const viajes = await Viaje.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const queja = await Queja.findByPk(req.params.id);
+            res.render('queja/quejaEdit', {
+                queja : queja.dataValues,
+                clientes: clientes,
+                taxistas: taxistas,
+                viajes: viajes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     // metodos de la clase
     static async showAll (req, res) {
-        const clientes = await Cliente.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const taxistas = await Taxista.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const viajes = await Viaje.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        const Quejas = await Queja.findAll({
-            where: { id_sede: req.app.locals.idSede}
-        });
-        res.render('queja/quejaIndex', {
-            quejas : Quejas,
-            clientes: clientes,
-            taxistas: taxistas,
-            viajes: viajes
-        });
+        if(req.app.locals.isOperador === 1){
+            const clientes = await Cliente.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const taxistas = await Taxista.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const viajes = await Viaje.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            const Quejas = await Queja.findAll({
+                where: { id_sede: req.app.locals.idSede}
+            });
+            res.render('queja/quejaIndex', {
+                quejas : Quejas,
+                clientes: clientes,
+                taxistas: taxistas,
+                viajes: viajes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {

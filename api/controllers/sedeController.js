@@ -3,23 +3,38 @@ const {SedeCooperativa,Usuario} = require('../../database/models/index')
 class SedeController {
 
     static create (req, res) {
-        res.render('sede/sedeCreate');
+        if(req.app.locals.isAdmin === 1){
+            res.render('sede/sedeCreate');
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const sede = await SedeCooperativa.findByPk(req.params.id);
-        res.render('sede/sedeEdit', {
-            sede : sede.dataValues
-        });
+        if(req.app.locals.isAdmin === 1){
+            const sede = await SedeCooperativa.findByPk(req.params.id);
+            res.render('sede/sedeEdit', {
+                sede : sede.dataValues
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async showAll (req, res) {
-        const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede','id_cooperativa', 'nombre_sede','direccion_sede']
-        }); 
-        res.render('sede/sedeIndex', {
-            sedes : Sedes
-        });
+        if(req.app.locals.isAdmin === 1){
+            const Sedes = await SedeCooperativa.findAll({
+                attributes:['id_sede','id_cooperativa', 'nombre_sede','direccion_sede']
+            }); 
+            res.render('sede/sedeIndex', {
+                sedes : Sedes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {
@@ -68,12 +83,7 @@ class SedeController {
         });
 
         if(usuarios){
-            const Sedes = await SedeCooperativa.findAll({
-                attributes:['id_sede','id_cooperativa', 'nombre_sede','direccion_sede']
-            }); 
-            res.render('./sede/sedeIndex',{message:'No se puede eliminar, la sede esta asociada a un usuario',
-                sedes: Sedes    
-            });
+            res.redirect('/sedes');
         }
         else{
             console.log(req.params);

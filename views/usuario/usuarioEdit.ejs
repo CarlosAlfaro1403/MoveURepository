@@ -7,11 +7,11 @@
                 <form action="/usuarios/editar/<%= usuario.id_usuario %>" method="POST">                    
                     <div class="mb-3">
                         <label for="names" class="form-label">Nombres</label>
-                        <input type="text" value="<%= usuario.nombres  %>" class="form-control" id="names" name="names" tabindex="1">
+                        <input type="text" value="<%= usuario.nombres  %>" class="form-control" id="names" name="names" tabindex="1" required>
                     </div>
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Apellidos</label>
-                        <input type="text" value="<%= usuario.apellidos  %>" class="form-control" id="lastName" name="lastName" tabindex="1">
+                        <input type="text" value="<%= usuario.apellidos  %>" class="form-control" id="lastName" name="lastName" tabindex="1" required>
                     </div>
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Sede</label>
@@ -39,11 +39,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="userName" class="form-label">Nombre de Usuario</label>
-                        <input type="text" value="<%= usuario.nombre_usuario  %>" class="form-control" id="userName" name="userName" tabindex="1">
+                        <input type="text" value="<%= usuario.nombre_usuario  %>" class="form-control" id="userName" name="userName" tabindex="1" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" value="<%= usuario.password  %>" class="form-control" id="password" name="password" tabindex="1">
+                        <input type="password" value="<%= usuario.password  %>" class="form-control" id="password" name="password" tabindex="1" required>
                     </div>
                     <div class="mb-3">
                         <label for="lastName" class="form-label">Estado</label>

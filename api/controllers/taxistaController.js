@@ -5,45 +5,60 @@ const {SedeCooperativa, Usuario} = require('../../database/models/index')
 class TaxistaController {
 
     static async create (req, res) {
-        const user = await Usuario.findOne({
-            where: {nombre_usuario:req.app.locals.user}
-        })
-        const Sedes = await SedeCooperativa.findAll({
-            where:{id_sede: user.id_sede}
-        });
-        res.render('taxista/taxistaCreate',{
-            sedes: Sedes
-        });
+        if(req.app.locals.isOperador === 1){
+            const user = await Usuario.findOne({
+                where: {nombre_usuario:req.app.locals.user}
+            })
+            const Sedes = await SedeCooperativa.findAll({
+                where:{id_sede: user.id_sede}
+            });
+            res.render('taxista/taxistaCreate',{
+                sedes: Sedes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const user = await Usuario.findOne({
-            where: {nombre_usuario:req.app.locals.user}
-        })
-        const taxista = await Taxista.findByPk(req.params.id);
-        const Sedes = await SedeCooperativa.findAll({
-            where:{id_sede: user.id_sede}
-        });
-        res.render('taxista/taxistaEdit', {
-            taxista : taxista.dataValues,
-            sedes: Sedes
-        });
+        if(req.app.locals.isOperador === 1){
+            const user = await Usuario.findOne({
+                where: {nombre_usuario:req.app.locals.user}
+            })
+            const taxista = await Taxista.findByPk(req.params.id);
+            const Sedes = await SedeCooperativa.findAll({
+                where:{id_sede: user.id_sede}
+            });
+            res.render('taxista/taxistaEdit', {
+                taxista : taxista.dataValues,
+                sedes: Sedes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async showAll (req, res) {
-        const user = await Usuario.findOne({
-            where: {nombre_usuario:req.app.locals.user}
-        })
-        const taxistas = await Taxista.findAll({
-             where:{id_sede: user.id_sede}
-        }); 
-        const Sedes = await SedeCooperativa.findAll({
-            where:{id_sede: user.id_sede}
-        });
-        res.render('taxista/taxistaIndex', {
-            taxistas : taxistas,
-            sedes: Sedes
-        });
+        if(req.app.locals.isOperador === 1){
+            const user = await Usuario.findOne({
+                where: {nombre_usuario:req.app.locals.user}
+            })
+            const taxistas = await Taxista.findAll({
+                 where:{id_sede: user.id_sede}
+            }); 
+            const Sedes = await SedeCooperativa.findAll({
+                where:{id_sede: user.id_sede}
+            });
+            res.render('taxista/taxistaIndex', {
+                taxistas : taxistas,
+                sedes: Sedes
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {
@@ -77,6 +92,7 @@ class TaxistaController {
                 const taxistas = await Taxista.findAll({
                     where:{id_sede: taxistaIdSede}
                 });
+
                 res.render('vehiculo/vehiculoCreateT',{
                     newTaxista: newTaxista,
                     taxistas: taxistas
@@ -100,6 +116,7 @@ class TaxistaController {
                     telefono_taxista: taxistaTelefono,
                     posee_auto: poseeAuto
                 })
+            
                 res.redirect('/taxistas');
             }
         }
@@ -134,11 +151,20 @@ class TaxistaController {
                     id_taxista: req.params.id
                 }
             });
+       
             res.redirect('/taxistas');
         }
     }
 
     static async delete (req, res) {
+        const vehiculo = await Vehiculo.findOne({
+            where:{id_taxista: req.params.id}
+        })
+
+        if(vehiculo){
+            res.redirect('/taxistas');
+        }
+        else{
             console.log(req.params);
 
             const sede = await Taxista.destroy({
@@ -147,6 +173,7 @@ class TaxistaController {
                 }
             });
             res.redirect('/taxistas');
+        }
     }
 }
 module.exports = TaxistaController

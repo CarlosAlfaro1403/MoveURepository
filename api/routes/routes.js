@@ -11,6 +11,7 @@ const accidenteRouter = require('./accidente')
 const quejaRouter = require('./queja')
 const vehiculoRouter = require('./vehiculo')
 const cooperativaRouter = require('./cooperativa')
+const clienteRouter = require('./cliente')
 
 router.get('/',loginController.login);
 router.post('/auth',loginController.auth);
@@ -28,4 +29,5 @@ router.use('/accidentes', accidenteRouter);
 router.use('/quejas', quejaRouter);
 router.use('/vehiculos', vehiculoRouter);
 router.use('/cooperativas', cooperativaRouter);
+router.use('/clientes', clienteRouter);
 module.exports = router;

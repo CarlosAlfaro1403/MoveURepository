@@ -8,22 +8,37 @@ class CooperativaController {
 
     // redireccionar a la vista de crear usuario
     static create (req, res) {
-        res.render('cooperativa/cooperativaCreate');
+        if(req.app.locals.isAdmin === 1){
+            res.render('cooperativa/cooperativaCreate');
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const cooperativa = await Cooperativa.findByPk(req.params.id);
-        res.render('cooperativa/cooperativaEdit', {
-            cooperativa: cooperativa.dataValues
-        });
+        if(req.app.locals.isAdmin === 1){
+            const cooperativa = await Cooperativa.findByPk(req.params.id);
+            res.render('cooperativa/cooperativaEdit', {
+                cooperativa: cooperativa.dataValues
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     // metodos de la clase
     static async showAll (req, res) {
-        const cooperativas = await Cooperativa.findAll();
-        res.render('cooperativa/cooperativaIndex', {
-            cooperativas : cooperativas
-        });
+        if(req.app.locals.isAdmin === 1){
+            const cooperativas = await Cooperativa.findAll();
+            res.render('cooperativa/cooperativaIndex', {
+                cooperativas : cooperativas
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {

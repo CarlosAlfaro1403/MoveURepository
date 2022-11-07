@@ -9,45 +9,61 @@ class UsuarioController {
 
     // redireccionar a la vista de crear usuario
     static async create (req, res) {
-        const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
-        });
-        const TipoUsuarios = await TipoUsuario.findAll({
-            attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
-        })
-        res.render('usuario/usuarioCreate',{
-            sedes: Sedes,
-            tipoUsuarios: TipoUsuarios
-        });
+        if(req.app.locals.isAdmin === 1){
+            const Sedes = await SedeCooperativa.findAll({
+                attributes:['id_sede', 'nombre_sede']
+            });
+            const TipoUsuarios = await TipoUsuario.findAll({
+                attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
+            })
+            res.render('usuario/usuarioCreate',{
+                sedes: Sedes,
+                tipoUsuarios: TipoUsuarios
+            });
+        }
+        else{
+            res.redirect('/');
+        }
+        
     }
 
     static async edit (req, res) {
-        const usuario = await Usuario.findByPk(req.params.id);
-        const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
-        });
-        const TipoUsuarios = await TipoUsuario.findAll({
-            attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
-        })
-        res.render('usuario/usuarioEdit', {
-            usuario : usuario.dataValues,
-            sedes: Sedes,
-            tipoUsuarios: TipoUsuarios
-        });
+        if(req.app.locals.isAdmin === 1){
+            const usuario = await Usuario.findByPk(req.params.id);
+            const Sedes = await SedeCooperativa.findAll({
+                attributes:['id_sede', 'nombre_sede']
+            });
+            const TipoUsuarios = await TipoUsuario.findAll({
+                attributes:['id_tipo_usuario', 'nombre_tipo_usuario']
+            })
+            res.render('usuario/usuarioEdit', {
+                usuario : usuario.dataValues,
+                sedes: Sedes,
+                tipoUsuarios: TipoUsuarios
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     // metodos de la clase
     static async showAll (req, res) {
-        const Usuarios = await Usuario.findAll({
-            attributes: ['id_usuario', 'nombre_usuario', 'apellidos', 'estado_usuario','nombres','id_sede']
-        });
-        const Sedes = await SedeCooperativa.findAll({
-            attributes:['id_sede', 'nombre_sede']
-        });
-        res.render('usuario/usuarioIndex', {
-            usuarios : Usuarios,
-            sedes: Sedes
-        });
+        if(req.app.locals.isAdmin === 1){
+            const Usuarios = await Usuario.findAll({
+                attributes: ['id_usuario', 'nombre_usuario', 'apellidos', 'estado_usuario','nombres','id_sede']
+            });
+            const Sedes = await SedeCooperativa.findAll({
+                attributes:['id_sede', 'nombre_sede']
+            });
+            res.render('usuario/usuarioIndex', {
+                usuarios : Usuarios,
+                sedes: Sedes
+            });
+        }
+        else{
+            res.redirect('/');
+        }      
     }
 
     static async show (req, res) {
