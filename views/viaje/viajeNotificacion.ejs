@@ -98,6 +98,7 @@
 
           var direccionArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.cliente_coordenadas) %>"));
           var destinoArr = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.destino_coordenadas) %>"));
+          var idTaxista = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.id_taxista) %>"));
           console.log(destinoArr)
           console.log(direccionArr)
           var idViaje = JSON.parse(htmlDecode("<%= JSON.stringify(viaje.id_viaje) %>"));
@@ -125,6 +126,7 @@
           var destino_a_fixed = parseFloat(direccionArr[0]).toFixed(3) + "," + parseFloat(direccionArr[1]).toFixed(3);
           var destino_a = parseFloat(direccionArr[0]) + "," + parseFloat(direccionArr[1]);
           var costo = 0.0;
+          var tiempo_total = 0.0;
           $("#destino").text(destino_a_fixed);
 
           const map = L.map('map').setView([direccionArr[0], direccionArr[1]], 16);
@@ -146,7 +148,7 @@
           }).on('routeselected', function (e) {
             var route = e.route;
             var distancia_total = route.summary.totalDistance;
-            var tiempo_total = Math.round((route.summary.totalTime / 60))
+            tiempo_total = Math.round((route.summary.totalTime / 60))
             destino_a = route.inputWaypoints[1].latLng.lat.toFixed(3) + "," + route.inputWaypoints[1].latLng.lng.toFixed(3)
             if (distancia_total > 20000) {
               costo = (10.20 + 0.2 * tiempo_total + 0.6 * distancia_total / 1000).toFixed(2)
@@ -172,7 +174,7 @@
           });
 
           $( "#iniciar_boton" ).click(function() {
-            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Confirmado', destino_coordenadas: destino_a, costo: costo})
+            $.post("/viajes/editar_notificacion/"+idViaje, { estado_viaje: 'Confirmado', destino_coordenadas: destino_a, costo: costo, tiempo_total: tiempo_total, id_taxista: idTaxista})
             .done(function (data) {
               alert("Viaje iniciado");
             })

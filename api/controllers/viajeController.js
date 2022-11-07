@@ -1,15 +1,18 @@
 const {Viaje,Usuario} = require('../../database/models/index')
 const {Taxista} = require('../../database/models/index')
+const { Sequelize } = require('sequelize')
 
 class ViajeController {
 
     // redireccionar a la vista de crear usuario
     static async create (req, res) {
-        const taxistas = await Taxista.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        })
+        const taxista = await Taxista.findOne({
+            where: { id_sede: req.app.locals.idSede,
+                disponibilidad: true },
+            order: [ [ 'asignado_cola', 'DESC' ]],
+        });
         res.render('viaje/viajeCreate',{
-            taxistas:taxistas
+            taxista:taxista
         });
     }
 
@@ -71,7 +74,7 @@ class ViajeController {
     }
 
     static async updateNotificacion (req, res) {
-        const { destino_coordenadas, estado_viaje, costo } = req.body;
+        const { destino_coordenadas, estado_viaje, costo, tiempo_total, id_taxista} = req.body;
         if (!destino_coordenadas){
             req.body.destino_coordenadas = '';
         }
@@ -84,7 +87,8 @@ class ViajeController {
             const viaje = await Viaje.update({
                 estado_viaje: estado_viaje,
                 destino_coordenadas: destino_coordenadas,
-                costo: costo
+                costo_servicio: costo,
+                tiempo_servicio: tiempo_total
             }, {
                 where: {
                     id_viaje: req.params.id
@@ -97,6 +101,10 @@ class ViajeController {
     
     static async store (req, res) {
         const { direccion, taxista, cliente_ubicacion} = req.body;
+        console.log(direccion)
+        console.log(taxista)
+        let id_taxista = taxista
+        console.log(cliente_ubicacion)
         if(!direccion || !taxista || !cliente_ubicacion) {
             console.log('Campos incompletos');
         }else {
@@ -105,10 +113,17 @@ class ViajeController {
                 cliente_coordenadas: direccion,
                 cliente_ubicacion: cliente_ubicacion,
                 destino_coordenadas: direccion,
-                id_taxista: taxista,
+                id_taxista: id_taxista,
                 estado_viaje: 'Pendiente',
                 id_sede: req.app.locals.idSede
-            })
+            });
+            const taxista = await Taxista.update({
+                disponibilidad: false
+            }, {
+                where: {
+                    id_taxista: id_taxista
+                }
+            });
             res.redirect('/viajes');
         }
     }

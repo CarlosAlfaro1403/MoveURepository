@@ -4,24 +4,29 @@
     <div class="card border-secondary">
         <div class="card-header">Asignar Viaje</div>
         <div class="card-body">
+            <% if (taxista) { %>
             <form action="/viajes" method="POST">
                 <p>Seleccione la dirección del viaje: </p>
                 <div id="map" style="width: 600px; height: 400px;"></div>
                 <div class="mb-3">
                     <input type="hidden" class="form-control" id="direccion" name="direccion" tabindex="1">
                 </div>
+                
+                
                 <div class="mb-3">
                     <label for="taxista" class="form-label">Taxista</label>
                     <select class="form-control" name="taxista" id="taxista" tabindex="1">
-                        <% taxistas.forEach( taxista => { %>
-                            <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
-                        <% }) %>
+                        <option value="<%= taxista.id_taxista %>"><%= taxista.nombre_taxista %></option>
                     </select>
                 </div>
+                
                 <input type="hidden" id="cliente_ubicacion" name="cliente_ubicacion" value="">
                 <button type="submit" class="btn btn-pimary" tabindex="5">Guardar</button>
                 <a href="/viajes" class="btn btn-secondary">Cancelar</a>
             </form>
+            <% } else { %>
+            <h3>No hay taxistas disponibles</h3>
+                <% }%>
         </div>
     </div>
 </div>

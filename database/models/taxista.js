@@ -59,6 +59,14 @@ Taxista.init({
     type: DataTypes.BOOLEAN,
     allowNull: true
   },
+  disponibilidad: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  asignado_cola: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
 }, {
   sequelize: connection.connect(),
   tableName: 'taxista',
