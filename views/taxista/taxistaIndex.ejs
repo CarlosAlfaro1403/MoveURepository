@@ -1,6 +1,6 @@
 <%-include('../base/headerO')-%>
 
-<h2>Bienvenido a la administración del Taxistas</h2>
+<h2>Bienvenido a la administración del Taxista</h2>
 <table class="table table-bordered table-striped text-center mt-4"> 
     <thead> 
         <tr class ="bg-primary text-white"> 
@@ -39,11 +39,6 @@
         <% }) %>
     </tbody> 
     <a href="taxistas/crear" class="btn btn-outline-primary mt-4" >Crear nuevo Taxista</a>
-    <div class="card-footer text-center py-3">
-        <% if(locals.message){ %>
-            <div class="alert alert-danger" role="alert" ><%=message %></div>
-        <% } %>
-    </div>
 </table>
 
 

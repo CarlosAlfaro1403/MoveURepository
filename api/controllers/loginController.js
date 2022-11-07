@@ -19,14 +19,23 @@ exports.auth = async(req,res)=>{
         if(user.password === req.body.password){
             if(user.id_tipo_usuario==1) //Admin
             {
+                req.app.locals.isAdmin=1;
+                req.app.locals.isTaxista=0;
+                req.app.locals.isOperador=0;
                 res.redirect('usuarios');
             }
             else if(user.id_tipo_usuario==2) //Taxista
             {
+                req.app.locals.isAdmin=0;
+                req.app.locals.isTaxista=1;
+                req.app.locals.isOperador=0;
                 res.redirect('/viajes/notificaciones');
             }
             else if(user.id_tipo_usuario==3) //Operador
             {
+                req.app.locals.isAdmin=0;
+                req.app.locals.isOperador=1;
+                req.app.locals.isTaxista=0;
                 res.redirect('viajes');
             }
         }else{

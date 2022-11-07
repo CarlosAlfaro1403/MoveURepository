@@ -8,38 +8,53 @@ class UsuarioController {
 
     // redireccionar a la vista de crear usuario
     static async create (req, res) {
-        const taxistas = await Taxista.findAll({
-            where:{id_sede: req.app.locals.idSede,posee_auto:false}
-        });
-        res.render('vehiculo/vehiculoCreate',{
-            taxistas: taxistas
-        });
+        if(req.app.locals.isOperador === 1){
+            const taxistas = await Taxista.findAll({
+                where:{id_sede: req.app.locals.idSede,posee_auto:false}
+            });
+            res.render('vehiculo/vehiculoCreate',{
+                taxistas: taxistas
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const taxistas = await Taxista.findAll({
-            where:{id_sede: req.app.locals.idSede}
-        });
-        const vehiculo = await Vehiculo.findByPk(req.params.id);
-        console.log(vehiculo);
-        res.render('vehiculo/vehiculoEdit', {
-            vehiculo : vehiculo.dataValues,
-            taxistas : taxistas
-        });
+        if(req.app.locals.isOperador === 1){
+            const taxistas = await Taxista.findAll({
+                where:{id_sede: req.app.locals.idSede}
+            });
+            const vehiculo = await Vehiculo.findByPk(req.params.id);
+            console.log(vehiculo);
+            res.render('vehiculo/vehiculoEdit', {
+                vehiculo : vehiculo.dataValues,
+                taxistas : taxistas
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     // metodos de la clase
     static async showAll (req, res) {
-        const taxistas = await Taxista.findAll({
-            where:{id_sede: req.app.locals.idSede}
-        });
-        const vehiculos = await Vehiculo.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        });
-        res.render('vehiculo/vehiculoIndex', {
-            vehiculos : vehiculos,
-            taxistas : taxistas
-        });
+        if(req.app.locals.isOperador === 1){
+            const taxistas = await Taxista.findAll({
+                where:{id_sede: req.app.locals.idSede}
+            });
+            const vehiculos = await Vehiculo.findAll({
+                where:{ id_sede: req.app.locals.idSede}
+            });
+            res.render('vehiculo/vehiculoIndex', {
+                vehiculos : vehiculos,
+                taxistas : taxistas
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {

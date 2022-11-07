@@ -1,25 +1,40 @@
-const {TipoUsuario} = require('../../database/models/index')
+const {TipoUsuario, Usuario} = require('../../database/models/index')
 
 class TipoUsuarioController {
 
     static create (req, res) {
-        res.render('tipoUsuario/tipoUsuarioCreate');
+        if(req.app.locals.isAdmin === 1){
+            res.render('tipoUsuario/tipoUsuarioCreate');
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const tipoUsuario = await TipoUsuario.findByPk(req.params.id);
-        res.render('tipoUsuario/tipoUsuarioEdit', {
-            tipoUsuario : tipoUsuario.dataValues
-        });
+        if(req.app.locals.isAdmin === 1){
+            const tipoUsuario = await TipoUsuario.findByPk(req.params.id);
+            res.render('tipoUsuario/tipoUsuarioEdit', {
+                tipoUsuario : tipoUsuario.dataValues
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async showAll (req, res) {
-        const tipoUsuarios = await TipoUsuario.findAll({
-            attributes:['id_tipo_usuario','nombre_tipo_usuario']
-        }); 
-        res.render('tipoUsuario/tipoUsuarioIndex', {
-            tipoUsuarios : tipoUsuarios
-        });
+        if(req.app.locals.isAdmin === 1){
+            const tipoUsuarios = await TipoUsuario.findAll({
+                attributes:['id_tipo_usuario','nombre_tipo_usuario']
+            }); 
+            res.render('tipoUsuario/tipoUsuarioIndex', {
+                tipoUsuarios : tipoUsuarios
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {
@@ -59,14 +74,24 @@ class TipoUsuarioController {
     }
 
     static async delete (req, res) {
-        console.log(req.params);
-
-        const tipoUsuario = await TipoUsuario.destroy({
-            where: {
-                id_tipo_usuario: req.params.id
-            }
+        const usuarios = await Usuario.findAll({
+            where:{id_tipo_usuario: req.params.id}
         });
-        res.redirect('/tipoUsuarios');
+
+        if(usuarios){
+            res.redirect('/tipoUsuarios');
+        }
+        else
+        {
+            console.log(req.params);
+
+            const tipoUsuario = await TipoUsuario.destroy({
+                where: {
+                    id_tipo_usuario: req.params.id
+                }
+            });
+            res.redirect('/tipoUsuarios');
+        }
     }
 }
 module.exports = TipoUsuarioController
