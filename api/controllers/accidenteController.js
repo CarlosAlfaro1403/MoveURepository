@@ -1,39 +1,55 @@
 const {Accidente,Vehiculo} = require('../../database/models/index')
+
 class AccidenteController {
 
     // redireccionar a la vista de crear accidente
     static async create (req, res) {
-        const vehiculos = await Vehiculo.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        });
-        res.render('accidente/accidenteCreate',{
-            vehiculos: vehiculos
-        });
+        if(req.app.locals.isOperador === 1){
+            const vehiculos = await Vehiculo.findAll({
+                where:{ id_sede: req.app.locals.idSede}
+            });
+            res.render('accidente/accidenteCreate',{
+                vehiculos: vehiculos
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async edit (req, res) {
-        const vehiculos = await Vehiculo.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        });
-        const accidente = await Accidente.findByPk(req.params.id);
-        res.render('accidente/accidenteEdit', {
-            accidente : accidente.dataValues,
-            vehiculos: vehiculos
-        });
+        if(req.app.locals.isOperador === 1){
+            const vehiculos = await Vehiculo.findAll({
+                where:{ id_sede: req.app.locals.idSede}
+            });
+            const accidente = await Accidente.findByPk(req.params.id);
+            res.render('accidente/accidenteEdit', {
+                accidente : accidente.dataValues,
+                vehiculos: vehiculos
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     // metodos de la clase
     static async showAll (req, res) {
-        const vehiculos = await Vehiculo.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        });
-        const Accidentes = await Accidente.findAll({
-            where:{ id_sede: req.app.locals.idSede}
-        });
-        res.render('accidente/accidenteIndex', {
-            accidentes : Accidentes,
-            vehiculos: vehiculos
-        });
+        if(req.app.locals.isOperador === 1){
+            const vehiculos = await Vehiculo.findAll({
+                where:{ id_sede: req.app.locals.idSede}
+            });
+            const Accidentes = await Accidente.findAll({
+                where:{ id_sede: req.app.locals.idSede}
+            });
+            res.render('accidente/accidenteIndex', {
+                accidentes : Accidentes,
+                vehiculos: vehiculos
+            });
+        }
+        else{
+            res.redirect('/');
+        }
     }
 
     static async show (req, res) {
